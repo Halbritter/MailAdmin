@@ -1,12 +1,14 @@
 package de.albritter.gui;
 
 
+import de.albritter.Utils.EventHandler;
+import de.albritter.Utils.UseRadioSelection;
 import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelMailbox extends JPanel {
+public class PanelMailbox extends JPanel implements UseRadioSelection {
     @Getter
     private JTextField textMail;
     @Getter
@@ -28,6 +30,9 @@ public class PanelMailbox extends JPanel {
      * Create the panel.
      */
     public PanelMailbox() {
+        EventHandler.registerForRadioAdd(this);
+        EventHandler.registerForRadioRemove(this);
+        EventHandler.registerForRadioUpdate(this);
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
@@ -142,4 +147,21 @@ public class PanelMailbox extends JPanel {
 
     }
 
+    @Override
+    public void selectAdd() {
+        spinnerID.setEnabled(false);
+    }
+
+    @Override
+    public void selectUpdate() {
+        spinnerID.setEnabled(true);
+
+    }
+
+    @Override
+    public void selectRemove() {
+        spinnerID.setEnabled(true);
+
+
+    }
 }

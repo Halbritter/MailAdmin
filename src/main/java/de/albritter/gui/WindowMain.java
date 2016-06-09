@@ -62,6 +62,7 @@ public class WindowMain extends JFrame {
         InputField.add(verticalBox, gbc_verticalBox);
 
         rdbtnAdd = new JRadioButton("Add");
+
         verticalBox.add(rdbtnAdd);
         rdbtnAdd.setSelected(true);
         buttonGroup.add(rdbtnAdd);
@@ -73,6 +74,7 @@ public class WindowMain extends JFrame {
         rdbtnRemove = new JRadioButton("Remove");
         verticalBox.add(rdbtnRemove);
         buttonGroup.add(rdbtnRemove);
+
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -122,4 +124,6 @@ public class WindowMain extends JFrame {
         this.revalidate();
         this.repaint();
     }
+
+
 }
