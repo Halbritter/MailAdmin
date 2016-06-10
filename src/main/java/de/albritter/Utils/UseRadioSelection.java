@@ -1,4 +1,4 @@
-package de.albritter.Utils;
+package de.albritter.utils;
 
 /**
  * Created by hhalbritter on 09.06.2016.

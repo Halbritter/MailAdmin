@@ -16,11 +16,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package de.albritter.Utils;
+package de.albritter.utils;
 
 import de.albritter.sql.MySQLHandler;
 import de.albritter.sql.data.*;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,19 +29,13 @@ import java.util.Iterator;
  */
 public class DataCollector {
 
-    public enum queueType {
-        REMOVE, ADD, UPDATE;
-    }
-
-    private static ArrayList<ADataObject> queueRemove = new ArrayList<ADataObject>();
-    private static ArrayList<ADataObject> queueAdd = new ArrayList<ADataObject>();
-    private static ArrayList<ADataObject> queueUdate = new ArrayList<ADataObject>();
-
     public final static ArrayList<Aliases> aliases = new ArrayList<Aliases>();
     public final static ArrayList<Domain> domains = new ArrayList<Domain>();
     public final static ArrayList<Mailbox> mailboxes = new ArrayList<Mailbox>();
     public final static ArrayList<TLSPolicy> tls = new ArrayList<TLSPolicy>();
-
+    private static ArrayList<ADataObject> queueRemove = new ArrayList<ADataObject>();
+    private static ArrayList<ADataObject> queueAdd = new ArrayList<ADataObject>();
+    private static ArrayList<ADataObject> queueUdate = new ArrayList<ADataObject>();
 
     public static <T extends ADataObject> void queuNewObject(T dataObject, queueType type) {
         switch (type) {
@@ -74,5 +67,9 @@ public class DataCollector {
             MySQLHandler.update(ite.next());
         }
         queueUdate.clear();
+    }
+
+    public enum queueType {
+        REMOVE, ADD, UPDATE
     }
 }
