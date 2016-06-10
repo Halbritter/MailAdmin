@@ -1,8 +1,8 @@
 package de.albritter.gui;
 
 
-import de.albritter.Utils.EventHandler;
-import de.albritter.Utils.UseRadioSelection;
+import de.albritter.utils.EventHandler;
+import de.albritter.utils.UseRadioSelection;
 import lombok.Getter;
 
 import javax.swing.*;

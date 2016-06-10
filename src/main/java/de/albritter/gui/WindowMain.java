@@ -66,7 +66,6 @@ public class WindowMain extends JFrame {
         verticalBox.add(rdbtnAdd);
         rdbtnAdd.setSelected(true);
         buttonGroup.add(rdbtnAdd);
-
         rdbtnUpadte = new JRadioButton("Upadte");
         verticalBox.add(rdbtnUpadte);
         buttonGroup.add(rdbtnUpadte);

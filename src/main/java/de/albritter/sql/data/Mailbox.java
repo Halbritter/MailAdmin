@@ -19,8 +19,7 @@
 package de.albritter.sql.data;
 
 import arlut.csd.crypto.Sha512Crypt;
-
-import de.albritter.Utils.CryptoUtils;
+import de.albritter.utils.CryptoUtils;
 import lombok.Setter;
 
 /**
