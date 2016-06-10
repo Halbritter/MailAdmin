@@ -61,16 +61,18 @@ public class WindowMain extends JFrame {
         gbc_verticalBox.gridy = 0;
         InputField.add(verticalBox, gbc_verticalBox);
 
+        RadioActionListener radioActionListener = new RadioActionListener();
         rdbtnAdd = new JRadioButton("Add");
-
+        rdbtnAdd.addActionListener(radioActionListener);
         verticalBox.add(rdbtnAdd);
         rdbtnAdd.setSelected(true);
         buttonGroup.add(rdbtnAdd);
-        rdbtnUpadte = new JRadioButton("Upadte");
+        rdbtnUpadte = new JRadioButton("Update");
+        rdbtnUpadte.addActionListener(radioActionListener);
         verticalBox.add(rdbtnUpadte);
         buttonGroup.add(rdbtnUpadte);
-
         rdbtnRemove = new JRadioButton("Remove");
+        rdbtnRemove.addActionListener(radioActionListener);
         verticalBox.add(rdbtnRemove);
         buttonGroup.add(rdbtnRemove);
 

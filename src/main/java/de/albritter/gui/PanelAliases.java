@@ -1,19 +1,29 @@
 package de.albritter.gui;
 
+import de.albritter.utils.EventHandler;
+import de.albritter.utils.UseRadioSelection;
+import lombok.Getter;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelAliases extends JPanel {
-    private JTextField textField;
-    private JTextField textField_1;
+public class PanelAliases extends JPanel implements UseRadioSelection {
+    @Getter
+    private JTextField textSourceMailAddress;
+    @Getter
+    private JTextField textDestination;
+    @Getter
     private JCheckBox chckbxActive;
-    private JComboBox comboBox;
+    @Getter
+    private JComboBox comboBoxDomain;
+    @Getter
     private JSpinner spinnerID;
 
     /**
      * Create the panel.
      */
     public PanelAliases() {
+        EventHandler.registerForRadioEvent(this);
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 29, 0};
         gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0};
@@ -46,14 +56,14 @@ public class PanelAliases extends JPanel {
         gbc_lblSourceMailadress.gridy = 1;
         add(lblSourceMailadress, gbc_lblSourceMailadress);
 
-        textField = new JTextField();
+        textSourceMailAddress = new JTextField();
         GridBagConstraints gbc_textField = new GridBagConstraints();
         gbc_textField.insets = new Insets(0, 0, 5, 5);
         gbc_textField.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField.gridx = 1;
         gbc_textField.gridy = 1;
-        add(textField, gbc_textField);
-        textField.setColumns(10);
+        add(textSourceMailAddress, gbc_textField);
+        textSourceMailAddress.setColumns(10);
 
         JLabel lblAT1 = new JLabel("@");
         GridBagConstraints gbc_lblAT1 = new GridBagConstraints();
@@ -63,13 +73,13 @@ public class PanelAliases extends JPanel {
         gbc_lblAT1.gridy = 1;
         add(lblAT1, gbc_lblAT1);
 
-        comboBox = new JComboBox();
+        comboBoxDomain = new JComboBox();
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.insets = new Insets(0, 0, 5, 5);
         gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
         gbc_comboBox.gridx = 3;
         gbc_comboBox.gridy = 1;
-        add(comboBox, gbc_comboBox);
+        add(comboBoxDomain, gbc_comboBox);
 
         JLabel lblDestination = new JLabel("Destination");
         GridBagConstraints gbc_lblDestination = new GridBagConstraints();
@@ -79,15 +89,15 @@ public class PanelAliases extends JPanel {
         gbc_lblDestination.gridy = 2;
         add(lblDestination, gbc_lblDestination);
 
-        textField_1 = new JTextField();
+        textDestination = new JTextField();
         GridBagConstraints gbc_textField_1 = new GridBagConstraints();
         gbc_textField_1.gridwidth = 3;
         gbc_textField_1.insets = new Insets(0, 0, 5, 5);
         gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField_1.gridx = 1;
         gbc_textField_1.gridy = 2;
-        add(textField_1, gbc_textField_1);
-        textField_1.setColumns(10);
+        add(textDestination, gbc_textField_1);
+        textDestination.setColumns(10);
 
         chckbxActive = new JCheckBox("Active");
         GridBagConstraints gbc_chckbxActive = new GridBagConstraints();
@@ -99,23 +109,32 @@ public class PanelAliases extends JPanel {
 
     }
 
-    public JCheckBox getChckbxActive() {
-        return chckbxActive;
+
+    @Override
+    public void selectAdd() {
+        spinnerID.setEnabled(false);
+        textDestination.setEnabled(true);
+        comboBoxDomain.setEnabled(true);
+        textSourceMailAddress.setEnabled(true);
+        chckbxActive.setEnabled(true);
+
     }
 
-    public JTextField getTextField_1() {
-        return textField_1;
+    @Override
+    public void selectUpdate() {
+        spinnerID.setEnabled(true);
+        textDestination.setEnabled(true);
+        comboBoxDomain.setEnabled(true);
+        textSourceMailAddress.setEnabled(true);
+        chckbxActive.setEnabled(true);
     }
 
-    public JTextField getTextField() {
-        return textField;
-    }
-
-    public JComboBox getComboBox() {
-        return comboBox;
-    }
-
-    public JSpinner getSpinnerID() {
-        return spinnerID;
+    @Override
+    public void selectRemove() {
+        spinnerID.setEnabled(true);
+        textDestination.setEnabled(false);
+        comboBoxDomain.setEnabled(false);
+        textSourceMailAddress.setEnabled(false);
+        chckbxActive.setEnabled(false);
     }
 }

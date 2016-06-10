@@ -30,9 +30,7 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
      * Create the panel.
      */
     public PanelMailbox() {
-        EventHandler.registerForRadioAdd(this);
-        EventHandler.registerForRadioRemove(this);
-        EventHandler.registerForRadioUpdate(this);
+        EventHandler.registerForRadioEvent(this);
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
@@ -150,18 +148,35 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
     @Override
     public void selectAdd() {
         spinnerID.setEnabled(false);
+        textMail.setEnabled(true);
+        passwordField.setEnabled(true);
+        passwordField_1.setEnabled(true);
+        spinnerQuota.setEnabled(true);
+        chckbxActive.setEnabled(true);
+        chckbxSendonly.setEnabled(true);
     }
 
     @Override
     public void selectUpdate() {
         spinnerID.setEnabled(true);
+        textMail.setEnabled(true);
+        passwordField.setEnabled(true);
+        passwordField_1.setEnabled(true);
+        spinnerQuota.setEnabled(true);
+        chckbxActive.setEnabled(true);
+        chckbxSendonly.setEnabled(true);
 
     }
 
     @Override
     public void selectRemove() {
         spinnerID.setEnabled(true);
-
+        textMail.setEnabled(false);
+        passwordField.setEnabled(false);
+        passwordField_1.setEnabled(false);
+        spinnerQuota.setEnabled(false);
+        chckbxActive.setEnabled(false);
+        chckbxSendonly.setEnabled(false);
 
     }
 }

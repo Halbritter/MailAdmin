@@ -1,5 +1,7 @@
 package de.albritter.gui;
 
+import de.albritter.utils.EventHandler;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +18,16 @@ public class RadioActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getID());
+        switch (e.getActionCommand()) {
+            case "Add":
+                EventHandler.radioAdd();
+                break;
+            case "Update":
+                EventHandler.radioUpdate();
+                break;
+            case "Remove":
+                EventHandler.radioRemove();
+                break;
+        }
     }
 }

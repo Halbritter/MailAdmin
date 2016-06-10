@@ -1,15 +1,25 @@
 package de.albritter.gui;
 
+import de.albritter.utils.EventHandler;
+import de.albritter.utils.UseRadioSelection;
+import lombok.Getter;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelDomain extends JPanel {
+public class PanelDomain extends JPanel implements UseRadioSelection {
+    @Getter
+    JCheckBox chckbxActive;
+    @Getter
     private JTextField textField;
+    @Getter
+    private JSpinner spinnerID;
 
     /**
      * Create the panel.
      */
     public PanelDomain() {
+        EventHandler.registerForRadioEvent(this);
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -24,14 +34,14 @@ public class PanelDomain extends JPanel {
         gbc_lblId.gridy = 0;
         add(lblId, gbc_lblId);
 
-        JSpinner spinner = new JSpinner();
+        spinnerID = new JSpinner();
         GridBagConstraints gbc_spinner = new GridBagConstraints();
         gbc_spinner.ipadx = 20;
         gbc_spinner.anchor = GridBagConstraints.WEST;
         gbc_spinner.insets = new Insets(0, 0, 5, 0);
         gbc_spinner.gridx = 1;
         gbc_spinner.gridy = 0;
-        add(spinner, gbc_spinner);
+        add(spinnerID, gbc_spinner);
 
         JLabel lblDomain = new JLabel("Domain");
         GridBagConstraints gbc_lblDomain = new GridBagConstraints();
@@ -50,13 +60,33 @@ public class PanelDomain extends JPanel {
         add(textField, gbc_textField);
         textField.setColumns(10);
 
-        JCheckBox chckbxActiv = new JCheckBox("Active");
+        chckbxActive = new JCheckBox("Active");
         GridBagConstraints gbc_chckbxActiv = new GridBagConstraints();
         gbc_chckbxActiv.anchor = GridBagConstraints.WEST;
         gbc_chckbxActiv.gridx = 1;
         gbc_chckbxActiv.gridy = 2;
-        add(chckbxActiv, gbc_chckbxActiv);
+        add(chckbxActive, gbc_chckbxActiv);
 
     }
 
+    @Override
+    public void selectAdd() {
+        spinnerID.setEnabled(false);
+        textField.setEnabled(true);
+        chckbxActive.setEnabled(true);
+    }
+
+    @Override
+    public void selectUpdate() {
+        spinnerID.setEnabled(true);
+        textField.setEnabled(true);
+        chckbxActive.setEnabled(true);
+    }
+
+    @Override
+    public void selectRemove() {
+        spinnerID.setEnabled(true);
+        textField.setEnabled(false);
+        chckbxActive.setEnabled(false);
+    }
 }

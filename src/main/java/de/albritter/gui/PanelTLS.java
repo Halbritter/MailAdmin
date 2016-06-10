@@ -1,19 +1,29 @@
 package de.albritter.gui;
 
+import de.albritter.utils.EventHandler;
+import de.albritter.utils.UseRadioSelection;
+import lombok.Getter;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelTLS extends JPanel {
+public class PanelTLS extends JPanel implements UseRadioSelection {
+    @Getter
     private JTextField textArgument;
+    @Getter
     private JTextField textDomain;
+    @Getter
     private JSpinner spinnerID;
+    @Getter
     private JComboBox comboBoxPolicy;
+    @Getter
     private JCheckBox chckbxActive;
 
     /**
      * Create the panel.
      */
     public PanelTLS() {
+        EventHandler.registerForRadioEvent(this);
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 202, 202, 202, 0};
         gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0, 0};
@@ -101,23 +111,28 @@ public class PanelTLS extends JPanel {
 
     }
 
-    public JSpinner getSpinnerID() {
-        return spinnerID;
+    @Override
+    public void selectAdd() {
+        spinnerID.setEnabled(false);
+        comboBoxPolicy.setEnabled(true);
+        textDomain.setEnabled(true);
+        chckbxActive.setEnabled(true);
+
     }
 
-    public JTextField getTextDomain() {
-        return textDomain;
+    @Override
+    public void selectUpdate() {
+        spinnerID.setEnabled(true);
+        comboBoxPolicy.setEnabled(true);
+        textDomain.setEnabled(true);
+        chckbxActive.setEnabled(true);
     }
 
-    public JComboBox getComboBoxPolicy() {
-        return comboBoxPolicy;
-    }
-
-    public JTextField getTextArgument() {
-        return textArgument;
-    }
-
-    public JCheckBox getChckbxActive() {
-        return chckbxActive;
+    @Override
+    public void selectRemove() {
+        spinnerID.setEnabled(true);
+        comboBoxPolicy.setEnabled(false);
+        textDomain.setEnabled(false);
+        chckbxActive.setEnabled(false);
     }
 }
