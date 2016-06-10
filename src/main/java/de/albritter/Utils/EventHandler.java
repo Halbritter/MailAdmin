@@ -10,7 +10,7 @@ public class EventHandler {
     private static ArrayList<UseRadioSelection> useRadioSelection = new ArrayList<UseRadioSelection>();
 
 
-    public static <T extends UseRadioSelection> void registerForRadioAdd(T obj) {
+    public static <T extends UseRadioSelection> void registerForRadioEvent(T obj) {
         useRadioSelection.add(obj);
     }
 
@@ -22,7 +22,7 @@ public class EventHandler {
         }
     }
 
-    public static void radioUpadte() {
+    public static void radioUpdate() {
         Iterator<UseRadioSelection> ite = useRadioSelection.iterator();
         while (ite.hasNext()) {
             ite.next().selectUpdate();

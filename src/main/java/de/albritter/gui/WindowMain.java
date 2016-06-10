@@ -1,5 +1,6 @@
 package de.albritter.gui;
 
+import de.albritter.gui.tables.DomainTable;
 import lombok.Getter;
 
 import javax.swing.*;
@@ -81,8 +82,9 @@ public class WindowMain extends JFrame {
         getContentPane().add(tabbedPane, BorderLayout.CENTER);
         tabbedPane.addChangeListener(new TabbedItemListener(tabbedPane));
 
-        JPanel pDomains = new JPanel();
+        JPanel pDomains = new DomainTable();
         tabbedPane.addTab("Domains", null, pDomains, null);
+
 
         JPanel pMailboxes = new JPanel();
         tabbedPane.addTab("Mailboxes", null, pMailboxes, null);
