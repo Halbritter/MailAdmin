@@ -18,9 +18,6 @@
 
 package de.albritter.sql.data;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by albritter on 05.06.16.
  */

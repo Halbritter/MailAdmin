@@ -18,7 +18,6 @@
 package de.albritter.sql;
 
 import de.albritter.sql.data.ADataObject;
-import de.albritter.sql.data.IDataObject;
 import lombok.Setter;
 
 import javax.swing.JOptionPane;

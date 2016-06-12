@@ -1,6 +1,6 @@
 package de.albritter.gui.tables;
 
-import javax.swing.*;
+import javax.swing.JTable;
 
 /**
  * Created by albritter on 10.06.16.
@@ -10,7 +10,7 @@ public class DataTable extends JTable {
 
     @Override
     public Class getColumnClass(int column) {
-        System.out.print(column+" "+getColumnCount()+"\n");
+        System.out.print(column + " " + getColumnCount() + "\n");
         if (2 == column) {
             return Boolean.class;
         } else if (column == 0) {
@@ -18,6 +18,10 @@ public class DataTable extends JTable {
         } else {
             return String.class;
         }
+    }
+
+    public DataTable() {
+        getTableHeader().setReorderingAllowed(false);
     }
 }
 

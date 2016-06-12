@@ -4,8 +4,14 @@ import de.albritter.utils.EventHandler;
 import de.albritter.utils.UseRadioSelection;
 import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 public class PanelDomain extends JPanel implements UseRadioSelection {
     @Getter

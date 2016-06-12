@@ -3,8 +3,17 @@ package de.albritter.gui;
 import de.albritter.gui.tables.DomainTable;
 import lombok.Getter;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 public class WindowMain extends JFrame {
     private final ButtonGroup buttonGroup = new ButtonGroup();

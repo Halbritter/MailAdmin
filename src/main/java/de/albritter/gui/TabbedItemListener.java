@@ -1,6 +1,6 @@
 package de.albritter.gui;
 
-import javax.swing.*;
+import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 

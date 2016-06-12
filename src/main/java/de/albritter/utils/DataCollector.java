@@ -19,7 +19,11 @@
 package de.albritter.utils;
 
 import de.albritter.sql.MySQLHandler;
-import de.albritter.sql.data.*;
+import de.albritter.sql.data.ADataObject;
+import de.albritter.sql.data.Aliases;
+import de.albritter.sql.data.Domain;
+import de.albritter.sql.data.Mailbox;
+import de.albritter.sql.data.TLSPolicy;
 
 import java.util.ArrayList;
 import java.util.Iterator;
