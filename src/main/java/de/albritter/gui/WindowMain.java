@@ -1,19 +1,19 @@
 package de.albritter.gui;
 
 import de.albritter.gui.tables.DomainTable;
-import lombok.Getter;
-
+import de.albritter.gui.tables.MailboxTable;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import lombok.Getter;
 
 public class WindowMain extends JFrame {
     private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -95,7 +95,7 @@ public class WindowMain extends JFrame {
         tabbedPane.addTab("Domains", null, pDomains, null);
 
 
-        JPanel pMailboxes = new JPanel();
+        JPanel pMailboxes = new MailboxTable();
         tabbedPane.addTab("Mailboxes", null, pMailboxes, null);
 
         JPanel pAliases = new JPanel();

@@ -24,7 +24,6 @@ import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 

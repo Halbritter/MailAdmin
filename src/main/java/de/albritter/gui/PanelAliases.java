@@ -2,17 +2,16 @@ package de.albritter.gui;
 
 import de.albritter.utils.EventHandler;
 import de.albritter.utils.UseRadioSelection;
-import lombok.Getter;
-
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import lombok.Getter;
 
 public class PanelAliases extends JPanel implements UseRadioSelection {
     @Getter

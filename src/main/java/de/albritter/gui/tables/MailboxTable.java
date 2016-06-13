@@ -3,25 +3,17 @@ package de.albritter.gui.tables;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
-
 
 /**
- * Created by hhalbritter on 10.06.2016.
+ * Created by hhalbritter on 13.06.2016.
  */
-public class DomainTable extends JPanel implements UpdateTabel {
-    private DataTable table;
+public class MailboxTable extends JPanel implements UpdateTabel {
+    DataTable table;
 
-    public DomainTable() {
+    public MailboxTable() {
         setLayout(new BorderLayout());
         table = new DataTable();
-        table.setModel(new DefaultTableModel(
-                new Object[][]{
-                        {2, "Domain.tld", false}
-                },
-                new String[]{"ID", "Domain", "Active"}
-        ));
-
+        table.setTableHeader(new String[]{"ID", "Username", "Domain", "Password", "Quota", "Enabled", "Sendonly"});
         table.getColumnModel().getColumn(0).setPreferredWidth(30);
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setPreferredWidth(60);
 
@@ -30,15 +22,14 @@ public class DomainTable extends JPanel implements UpdateTabel {
         add(new JScrollPane(table));
     }
 
-
     @Override
     public void updateDomainTable(String[] header, Object[][] data) {
-        table.updateTable(header, data);
+
     }
 
     @Override
     public void updateMailboxTable(String[] header, Object[][] data) {
-
+        table.updateTable(header, data);
     }
 
     @Override

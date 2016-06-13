@@ -18,26 +18,17 @@
 package de.albritter.sql;
 
 import de.albritter.sql.data.ADataObject;
-import lombok.Setter;
-
-import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import lombok.Setter;
 
 /**
  * Created by albritter on 04.06.16.
  */
 public final class MySQLHandler {
-    @Setter
-    private static String password;
-    @Setter
-    private static String server;
-    @Setter
-    private static String user;
-    @Setter
-    private static String db;
     private static final String ADD_DOMAIN;
     private static final String ADD_MAILBOX;
     private static final String ADD_ALIAS;
@@ -50,8 +41,17 @@ public final class MySQLHandler {
     private static final String REMOVE_MAILBOX;
     private static final String REMOVE_ALIAS;
     private static final String REMOVE_TLS;
+    @Setter
+    private static String password;
+    @Setter
+    private static String server;
+    @Setter
+    private static String user;
+    @Setter
+    private static String db;
     private static PreparedStatement preparedStatement;
     private static ADataObject dataObject;
+    private static Connection conn;
 
     static {
         ADD_DOMAIN = "INSERT INTO domains (domain) VALUES (?)";
@@ -74,8 +74,6 @@ public final class MySQLHandler {
             JOptionPane.showMessageDialog(null, e.getStackTrace(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private static Connection conn;
 
     public static void openConnection() {
         try {

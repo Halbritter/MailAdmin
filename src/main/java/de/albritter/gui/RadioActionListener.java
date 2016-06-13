@@ -1,7 +1,6 @@
 package de.albritter.gui;
 
 import de.albritter.utils.EventHandler;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
