@@ -1,6 +1,5 @@
 package de.albritter.gui.tables;
 
-import com.sun.istack.internal.NotNull;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,13 +18,12 @@ public class DataTable extends JTable {
 
     @Override
     public Class getColumnClass(int column) {
-        if (getColumnCount() - 1 == column) {
-            return Boolean.class;
-        } else if (column == 0) {
+        String name = getColumnName(column);
+        if (name.equals("ID") || name.equals("Quota")) {
             return Integer.class;
-        } else {
-            return String.class;
-        }
+        } else if (name.equals("Active") || name.equals("Sendonly")) {
+            return Boolean.class;
+        } else return String.class;
     }
 
     @Override
@@ -33,16 +31,34 @@ public class DataTable extends JTable {
         return false;
     }
 
-    @NotNull
-    public void updateTable(String[] header) {
-        this.header = header;
+    public void updateTable(Object[][] data) {
+        this.data = data;
         setModel(new DefaultTableModel(data, header));
+        for (int i = 0; i < header.length; i++) {
+            switch (getColumnName(i)) {
+                case "ID":
+                case "Quota":
+                    getColumnModel().getColumn(i).setPreferredWidth(30);
+                    getColumnModel().getColumn(i).setMaxWidth(60);
+                    break;
+                case "Sendonly":
+                case "Active":
+                    getColumnModel().getColumn(i).setPreferredWidth(60);
+                    getColumnModel().getColumn(i).setMaxWidth(60);
+                    getColumnModel().getColumn(i).setMinWidth(60);
+                    break;
+
+            }
+        }
+
     }
 
-    public void setTableHeader(String[] header) {
 
+    public void setTableHeader(String[] header) {
         this.header = header;
-        this. this = new DataTable();
+        setModel(new DefaultTableModel(data, header));
+
+
     }
 }
 

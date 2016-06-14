@@ -1,5 +1,6 @@
 package de.albritter.gui;
 
+import de.albritter.gui.tables.AliasTable;
 import de.albritter.gui.tables.DomainTable;
 import de.albritter.gui.tables.MailboxTable;
 import java.awt.BorderLayout;
@@ -35,7 +36,7 @@ public class WindowMain extends JFrame {
      * Create the frame.
      */
     public WindowMain() {
-
+        setDefaultCloseOperation(3);
         panelAliases = new PanelAliases();
         panelDomain = new PanelDomain();
         panelMailbox = new PanelMailbox();
@@ -98,7 +99,7 @@ public class WindowMain extends JFrame {
         JPanel pMailboxes = new MailboxTable();
         tabbedPane.addTab("Mailboxes", null, pMailboxes, null);
 
-        JPanel pAliases = new JPanel();
+        JPanel pAliases = new AliasTable();
         tabbedPane.addTab("Aliases", null, pAliases, null);
 
         JPanel pTLS = new JPanel();

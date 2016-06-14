@@ -55,7 +55,7 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
         add(lblId, gbc_lblId);
 
         spinnerID = new JSpinner();
-        spinnerID.setModel(new SpinnerNumberModel(new Integer(1), new Integer(0), null, new Integer(1)));
+        spinnerID.setModel(new SpinnerNumberModel(1, 1, 1, 100));
         // spinnerID.setEditor(new JSpinner.NumberEditor(spinnerID, "####"));
         // ((JSpinner.DefaultEditor)
         // spinnerID.getEditor()).getTextField().setColumns(3);
