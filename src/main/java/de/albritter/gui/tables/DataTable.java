@@ -11,9 +11,10 @@ public class DataTable extends JTable {
     private String[] header;
     private Object[][] data;
 
-    public DataTable() {
+    public DataTable(String[] header) {
+        this.header = header;
         getTableHeader().setReorderingAllowed(false);
-
+        setModel(new DefaultTableModel(data, header));
     }
 
     @Override
@@ -38,7 +39,8 @@ public class DataTable extends JTable {
             switch (getColumnName(i)) {
                 case "ID":
                 case "Quota":
-                    getColumnModel().getColumn(i).setPreferredWidth(30);
+                    getColumnModel().getColumn(i).setMinWidth(45);
+                    getColumnModel().getColumn(i).setPreferredWidth(45);
                     getColumnModel().getColumn(i).setMaxWidth(60);
                     break;
                 case "Sendonly":
@@ -54,9 +56,8 @@ public class DataTable extends JTable {
     }
 
 
-    public void setTableHeader(String[] header) {
+    public void setTableHeader() {
         this.header = header;
-        setModel(new DefaultTableModel(data, header));
 
 
     }

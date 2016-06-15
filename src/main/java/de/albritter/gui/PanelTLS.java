@@ -1,5 +1,6 @@
 package de.albritter.gui;
 
+import de.albritter.sql.data.TLSPolicy;
 import de.albritter.utils.EventHandler;
 import de.albritter.utils.UseRadioSelection;
 import java.awt.GridBagConstraints;
@@ -82,7 +83,7 @@ public class PanelTLS extends JPanel implements UseRadioSelection {
         add(lblPolicy, gbc_lblPolicy);
 
         comboBoxPolicy = new JComboBox();
-        comboBoxPolicy.setModel(new DefaultComboBoxModel(new String[]{"none", "may", "encrypt", "dane", "dane-only", "fingerprint", "verify", "secure"}));
+        comboBoxPolicy.setModel(new DefaultComboBoxModel(TLSPolicy.Policy.values()));
         GridBagConstraints gbc_comboBoxPolicy = new GridBagConstraints();
         gbc_comboBoxPolicy.insets = new Insets(0, 0, 5, 5);
         gbc_comboBoxPolicy.fill = GridBagConstraints.HORIZONTAL;

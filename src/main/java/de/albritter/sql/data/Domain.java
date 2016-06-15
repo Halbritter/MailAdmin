@@ -27,8 +27,10 @@ public class Domain extends ADataObject {
 
     @Setter
     private String domain;
+    @Setter
+    private boolean active;
 
     public String[] getDataAsArray() {
-        return new String[]{domain};
+        return new String[]{domain, String.valueOf(active)};
     }
 }

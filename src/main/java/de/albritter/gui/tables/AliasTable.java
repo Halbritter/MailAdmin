@@ -13,8 +13,7 @@ public class AliasTable extends JPanel implements UpdateTabel {
 
     public AliasTable() {
         setLayout(new BorderLayout());
-        table = new DataTable();
-        table.setTableHeader(HEADER);
+        table = new DataTable(HEADER);
         table.updateTable(new Object[][]{{464, "userIn", "domainIn", "userOut", "doamainOut", false}});
 
 

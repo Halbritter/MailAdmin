@@ -16,8 +16,7 @@ public class MailboxTable extends JPanel implements UpdateTabel {
 
         EventHandler.registerForUpdateTableEvent(this);
         setLayout(new BorderLayout());
-        table = new DataTable();
-        table.setTableHeader(HEADER);
+        table = new DataTable(HEADER);
         table.updateTable(new Object[][]{{13, "user", "domain", "pass", 5000, true, true}});
         add(new JScrollPane(table));
     }

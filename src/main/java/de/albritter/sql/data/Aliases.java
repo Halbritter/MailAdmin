@@ -37,11 +37,8 @@ public class Aliases extends ADataObject {
     @Setter
     private String destinationDomain;
 
-    @Setter
-    private boolean enabled;
-
 
     public String[] getDataAsArray() {
-        return new String[]{sourceUsername, sourceDomain, destinationUsername, destinationDomain, String.valueOf(enabled)};
+        return new String[]{sourceUsername, sourceDomain, destinationUsername, destinationDomain, String.valueOf(active)};
     }
 }

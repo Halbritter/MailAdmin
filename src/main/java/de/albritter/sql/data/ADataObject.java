@@ -27,5 +27,7 @@ import lombok.Setter;
 public abstract class ADataObject implements IDataObject{
     @Getter
     @Setter
-    int id;
+    protected int id;
+    @Setter
+    protected boolean active;
 }

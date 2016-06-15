@@ -35,13 +35,11 @@ public class Mailbox extends ADataObject {
     @Setter
     private int quota;
     @Setter
-    private boolean enabled;
-    @Setter
     private boolean sendonly;
 
 
     public String[] getDataAsArray() {
         //return new String[]{username, domain, "{SHA512-CRYPT}" + Sha512Crypt.Sha512_crypt(password, "$6$"+CryptoUtils.getNewSalt()+"$", 5000), String.valueOf(quota), String.valueOf(enabled), String.valueOf(sendonly)};
-        return new String[]{username, domain, "{SHA512-CRYPT}" + Sha512Crypt.Sha512_crypt(password, CryptoUtils.getNewSalt(), 5000), String.valueOf(quota), String.valueOf(enabled), String.valueOf(sendonly)};
+        return new String[]{username, domain, "{SHA512-CRYPT}" + Sha512Crypt.Sha512_crypt(password, CryptoUtils.getNewSalt(), 5000), String.valueOf(quota), String.valueOf(active), String.valueOf(sendonly)};
     }
 }

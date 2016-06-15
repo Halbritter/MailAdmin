@@ -69,7 +69,7 @@ public final class MySQLHandler {
         try {
             // The newInstance() call is a work around for some
             // broken Java implementations
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getStackTrace(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
@@ -77,7 +77,8 @@ public final class MySQLHandler {
 
     public static void openConnection() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://" + server + "/" + db, user, password);
+            conn = DriverManager.getConnection("jdbc:mysql://" + server + "/" + db + "?useSSL=false", user, password);
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getStackTrace(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
@@ -122,12 +123,14 @@ public final class MySQLHandler {
         }
     }
 
-    public static <T extends ADataObject> void add(Object data) {
+    public static <T extends ADataObject> void add(T data) {
         PreparedStatement preparedStatement = null;
         try {
             switch (data.getClass().getSimpleName()) {
                 case "Domain":
                     preparedStatement = conn.prepareStatement(ADD_DOMAIN);
+                    preparedStatement.setString(1, data.getDataAsArray()[0]);
+                    preparedStatement.setString(2, data.getDataAsArray()[1]);
                     break;
                 case "Mailbox":
                     preparedStatement = conn.prepareStatement(ADD_MAILBOX);

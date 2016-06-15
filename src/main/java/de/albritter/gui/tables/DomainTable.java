@@ -14,8 +14,7 @@ public class DomainTable extends JPanel implements UpdateTabel {
 
     public DomainTable() {
         setLayout(new BorderLayout());
-        table = new DataTable();
-        table.setTableHeader(HEADER);
+        table = new DataTable(HEADER);
         table.updateTable(new Object[][]{{464, "fsdf", false}});
 
 

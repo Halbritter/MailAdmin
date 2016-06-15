@@ -3,6 +3,7 @@ package de.albritter.gui;
 import de.albritter.gui.tables.AliasTable;
 import de.albritter.gui.tables.DomainTable;
 import de.albritter.gui.tables.MailboxTable;
+import de.albritter.gui.tables.TLSTable;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
@@ -10,6 +11,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -26,6 +28,8 @@ public class WindowMain extends JFrame {
     private final PanelAliases panelAliases;
     @Getter
     private final PanelDomain panelDomain;
+    @Getter
+    private final JTabbedPane tabbedPane;
     private JRadioButton rdbtnAdd;
     private JRadioButton rdbtnUpadte;
     private JRadioButton rdbtnRemove;
@@ -86,9 +90,12 @@ public class WindowMain extends JFrame {
         rdbtnRemove.addActionListener(radioActionListener);
         verticalBox.add(rdbtnRemove);
         buttonGroup.add(rdbtnRemove);
+        JButton btnApply = new JButton("Apply");
+        btnApply.addActionListener(new ApplyListener(this));
+        verticalBox.add(btnApply);
 
 
-        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         getContentPane().add(tabbedPane, BorderLayout.CENTER);
         tabbedPane.addChangeListener(new TabbedItemListener(tabbedPane));
 
@@ -102,7 +109,7 @@ public class WindowMain extends JFrame {
         JPanel pAliases = new AliasTable();
         tabbedPane.addTab("Aliases", null, pAliases, null);
 
-        JPanel pTLS = new JPanel();
+        JPanel pTLS = new TLSTable();
         tabbedPane.addTab("TLS", null, pTLS, null);
 
     }

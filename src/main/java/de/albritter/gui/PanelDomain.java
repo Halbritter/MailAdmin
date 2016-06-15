@@ -16,7 +16,7 @@ public class PanelDomain extends JPanel implements UseRadioSelection {
     @Getter
     JCheckBox chckbxActive;
     @Getter
-    private JTextField textField;
+    private JTextField textDomain;
     @Getter
     private JSpinner spinnerID;
 
@@ -56,14 +56,14 @@ public class PanelDomain extends JPanel implements UseRadioSelection {
         gbc_lblDomain.gridy = 1;
         add(lblDomain, gbc_lblDomain);
 
-        textField = new JTextField();
+        textDomain = new JTextField();
         GridBagConstraints gbc_textField = new GridBagConstraints();
         gbc_textField.insets = new Insets(0, 0, 5, 0);
         gbc_textField.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField.gridx = 1;
         gbc_textField.gridy = 1;
-        add(textField, gbc_textField);
-        textField.setColumns(10);
+        add(textDomain, gbc_textField);
+        textDomain.setColumns(10);
 
         chckbxActive = new JCheckBox("Active");
         GridBagConstraints gbc_chckbxActiv = new GridBagConstraints();
@@ -77,21 +77,21 @@ public class PanelDomain extends JPanel implements UseRadioSelection {
     @Override
     public void selectAdd() {
         spinnerID.setEnabled(false);
-        textField.setEnabled(true);
+        textDomain.setEnabled(true);
         chckbxActive.setEnabled(true);
     }
 
     @Override
     public void selectUpdate() {
         spinnerID.setEnabled(true);
-        textField.setEnabled(true);
+        textDomain.setEnabled(true);
         chckbxActive.setEnabled(true);
     }
 
     @Override
     public void selectRemove() {
         spinnerID.setEnabled(true);
-        textField.setEnabled(false);
+        textDomain.setEnabled(false);
         chckbxActive.setEnabled(false);
     }
 }
