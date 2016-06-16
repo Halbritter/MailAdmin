@@ -77,10 +77,11 @@ public final class MySQLHandler {
 
     public static void openConnection() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://" + server + "/" + db + "?requireSSL=true", user, password);
+            conn = DriverManager.getConnection("jdbc:mysql://" + server + "/" + db + "?requireSSL=true&serverTimezone=Europe/Berlin", user, password);
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getStackTrace(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
