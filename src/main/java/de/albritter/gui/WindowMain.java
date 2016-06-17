@@ -4,11 +4,8 @@ import de.albritter.gui.tables.AliasTable;
 import de.albritter.gui.tables.DomainTable;
 import de.albritter.gui.tables.MailboxTable;
 import de.albritter.gui.tables.TLSTable;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import lombok.Getter;
+
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -16,10 +13,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import lombok.Getter;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 public class WindowMain extends JFrame {
-    @Getter
     private final ButtonGroup buttonGroup = new ButtonGroup();
     @Getter
     private final PanelMailbox panelMailbox;
@@ -31,8 +31,11 @@ public class WindowMain extends JFrame {
     private final PanelDomain panelDomain;
     @Getter
     private final JTabbedPane tabbedPane;
+    @Getter
     private JRadioButton rdbtnAdd;
+    @Getter
     private JRadioButton rdbtnUpadte;
+    @Getter
     private JRadioButton rdbtnRemove;
     private JPanel swapPanel;
     private JPanel InputField;

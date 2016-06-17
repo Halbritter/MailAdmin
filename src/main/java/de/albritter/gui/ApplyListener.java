@@ -1,6 +1,7 @@
 package de.albritter.gui;
 
 import arlut.csd.crypto.Sha512Crypt;
+import de.albritter.sql.MySQLHandler;
 import de.albritter.sql.data.ADataObject;
 import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
@@ -94,6 +95,20 @@ public class ApplyListener implements ActionListener {
                     return;
                 }
         }
+
         //todo Logic for update add and remove radiobuttons
+        if (src.getRdbtnAdd().isSelected()) {
+            MySQLHandler.add(dataObject);
+        } else if (src.getRdbtnUpadte().isSelected()) {
+            MySQLHandler.update(dataObject);
+        } else {
+            int result = JOptionPane.showConfirmDialog(null,
+                    "Are you sure to delete id " + dataObject.getId(), null, JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                MySQLHandler.remove(dataObject);
+            }
+
+
+        }
     }
 }
