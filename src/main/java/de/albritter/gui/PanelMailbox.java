@@ -3,9 +3,8 @@ package de.albritter.gui;
 
 import de.albritter.utils.EventHandler;
 import de.albritter.utils.UseRadioSelection;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import lombok.Getter;
+
 import javax.swing.Box;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -13,8 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import lombok.Getter;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 public class PanelMailbox extends JPanel implements UseRadioSelection {
     @Getter
@@ -55,9 +55,9 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
         add(lblId, gbc_lblId);
 
         spinnerID = new JSpinner();
-        spinnerID.setModel(new SpinnerNumberModel(1, 1, 1, 100));
+        //spinnerID.setModel(new SpinnerNumberModel(1, 1, null, 1));
         // spinnerID.setEditor(new JSpinner.NumberEditor(spinnerID, "####"));
-        // ((JSpinner.DefaultEditor)
+        //((JSpinner.DefaultEditor)
         // spinnerID.getEditor()).getTextField().setColumns(3);
         GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
         gbc_spinner_1.ipadx = 20;

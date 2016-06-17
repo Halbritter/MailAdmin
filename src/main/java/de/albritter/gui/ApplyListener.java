@@ -1,16 +1,16 @@
 package de.albritter.gui;
 
 import arlut.csd.crypto.Sha512Crypt;
-import de.albritter.sql.MySQLHandler;
 import de.albritter.sql.data.ADataObject;
 import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
 import de.albritter.utils.CryptoUtils;
+
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
 
 /**
  * Created by hhalbritter on 15.06.2016.
@@ -36,9 +36,8 @@ public class ApplyListener implements ActionListener {
         switch (src.getTabbedPane().getSelectedIndex()) {
             case 0:
                 try {
-                    Domain d = new Domain();
-                    d.setDomain(src.getPanelDomain().getTextDomain().getText());
-                    MySQLHandler.add(d);
+                    dataObject = new Domain();
+                    ((Domain) dataObject).setDomain(src.getPanelDomain().getTextDomain().getText());
                     break;
                 } catch (IndexOutOfBoundsException ex) {
                     JOptionPane.showMessageDialog(src, "Bitte überprüfen Sie ihre eingabe");
