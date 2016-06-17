@@ -5,7 +5,6 @@ import de.albritter.utils.UseRadioSelection;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -13,8 +12,6 @@ import javax.swing.JTextField;
 import lombok.Getter;
 
 public class PanelDomain extends JPanel implements UseRadioSelection {
-    @Getter
-    JCheckBox chckbxActive;
     @Getter
     private JTextField textDomain;
     @Getter
@@ -65,33 +62,23 @@ public class PanelDomain extends JPanel implements UseRadioSelection {
         add(textDomain, gbc_textField);
         textDomain.setColumns(10);
 
-        chckbxActive = new JCheckBox("Active");
-        GridBagConstraints gbc_chckbxActiv = new GridBagConstraints();
-        gbc_chckbxActiv.anchor = GridBagConstraints.WEST;
-        gbc_chckbxActiv.gridx = 1;
-        gbc_chckbxActiv.gridy = 2;
-        add(chckbxActive, gbc_chckbxActiv);
-
     }
 
     @Override
     public void selectAdd() {
         spinnerID.setEnabled(false);
         textDomain.setEnabled(true);
-        chckbxActive.setEnabled(true);
     }
 
     @Override
     public void selectUpdate() {
         spinnerID.setEnabled(true);
         textDomain.setEnabled(true);
-        chckbxActive.setEnabled(true);
     }
 
     @Override
     public void selectRemove() {
         spinnerID.setEnabled(true);
         textDomain.setEnabled(false);
-        chckbxActive.setEnabled(false);
     }
 }

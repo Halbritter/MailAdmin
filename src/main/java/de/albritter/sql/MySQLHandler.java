@@ -50,7 +50,6 @@ public final class MySQLHandler {
     @Setter
     private static String db;
     private static PreparedStatement preparedStatement;
-    private static ADataObject dataObject;
     private static Connection conn;
 
     static {
@@ -69,7 +68,7 @@ public final class MySQLHandler {
         try {
             // The newInstance() call is a work around for some
             // broken Java implementations
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getStackTrace(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
@@ -107,7 +106,7 @@ public final class MySQLHandler {
                     idPos = 4;
                     break;
             }
-            preparedStatement = fill(preparedStatement, data);
+            // preparedStatement = fill(preparedStatement, sData);
             preparedStatement.setInt(idPos, data.getId());
             preparedStatement.execute();
 
@@ -125,16 +124,17 @@ public final class MySQLHandler {
     }
 
     public static <T extends ADataObject> void add(T data) {
+        System.out.println("Add Statemnt");
         PreparedStatement preparedStatement = null;
+        String[] sData = data.getDataAsArray();
         try {
             switch (data.getClass().getSimpleName()) {
                 case "Domain":
                     preparedStatement = conn.prepareStatement(ADD_DOMAIN);
-                    preparedStatement.setString(1, data.getDataAsArray()[0]);
-                    preparedStatement.setString(2, data.getDataAsArray()[1]);
                     break;
                 case "Mailbox":
                     preparedStatement = conn.prepareStatement(ADD_MAILBOX);
+                    System.out.print(data.getDataAsArray());
                     break;
                 case "Aliases":
                     preparedStatement = conn.prepareStatement(ADD_ALIAS);
@@ -142,10 +142,14 @@ public final class MySQLHandler {
                 case "TLSPolicy":
                     preparedStatement = conn.prepareStatement(ADD_TLS);
                     break;
+                default:
+                    System.out.print(data.getClass().getSimpleName());
             }
+            fill(preparedStatement, sData).execute();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+            e.printStackTrace();
         }
     }
 
@@ -166,17 +170,13 @@ public final class MySQLHandler {
                     preparedStatement = conn.prepareStatement(REMOVE_TLS);
                     break;
             }
-            preparedStatement.setInt(1, data.getId());
-            preparedStatement.execute();
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
 
-    private static PreparedStatement fill(PreparedStatement preparedStatement, ADataObject dataObject) throws SQLException {
-        MySQLHandler.preparedStatement = preparedStatement;
-        MySQLHandler.dataObject = dataObject;
-        String[] data = dataObject.getDataAsArray();
+    private static PreparedStatement fill(PreparedStatement preparedStatement, String[] data) throws SQLException {
         for (int i = 0; i < data.length; i++) {
             preparedStatement.setString(i + 1, data[i]);
         }

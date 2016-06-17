@@ -35,7 +35,7 @@ public class Mailbox extends ADataObject {
     @Setter
     private int quota;
     @Setter
-    private boolean sendonly;
+    private int sendonly;
 
 
     public String[] getDataAsArray() {

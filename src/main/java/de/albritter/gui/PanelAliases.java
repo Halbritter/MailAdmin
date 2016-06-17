@@ -15,7 +15,7 @@ import lombok.Getter;
 
 public class PanelAliases extends JPanel implements UseRadioSelection {
     @Getter
-    private JTextField textSourceMailAddress;
+    private JTextField textSourceUsername;
     @Getter
     private JTextField textDestination;
     @Getter
@@ -62,14 +62,14 @@ public class PanelAliases extends JPanel implements UseRadioSelection {
         gbc_lblSourceMailadress.gridy = 1;
         add(lblSourceMailadress, gbc_lblSourceMailadress);
 
-        textSourceMailAddress = new JTextField();
+        textSourceUsername = new JTextField();
         GridBagConstraints gbc_textField = new GridBagConstraints();
         gbc_textField.insets = new Insets(0, 0, 5, 5);
         gbc_textField.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField.gridx = 1;
         gbc_textField.gridy = 1;
-        add(textSourceMailAddress, gbc_textField);
-        textSourceMailAddress.setColumns(10);
+        add(textSourceUsername, gbc_textField);
+        textSourceUsername.setColumns(10);
 
         JLabel lblAT1 = new JLabel("@");
         GridBagConstraints gbc_lblAT1 = new GridBagConstraints();
@@ -79,7 +79,7 @@ public class PanelAliases extends JPanel implements UseRadioSelection {
         gbc_lblAT1.gridy = 1;
         add(lblAT1, gbc_lblAT1);
 
-        comboBoxDomain = new JComboBox();
+        comboBoxDomain = new JComboBox(new String[]{"tset", "foi13.de"});
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.insets = new Insets(0, 0, 5, 5);
         gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -121,7 +121,7 @@ public class PanelAliases extends JPanel implements UseRadioSelection {
         spinnerID.setEnabled(false);
         textDestination.setEnabled(true);
         comboBoxDomain.setEnabled(true);
-        textSourceMailAddress.setEnabled(true);
+        textSourceUsername.setEnabled(true);
         chckbxActive.setEnabled(true);
 
     }
@@ -131,7 +131,7 @@ public class PanelAliases extends JPanel implements UseRadioSelection {
         spinnerID.setEnabled(true);
         textDestination.setEnabled(true);
         comboBoxDomain.setEnabled(true);
-        textSourceMailAddress.setEnabled(true);
+        textSourceUsername.setEnabled(true);
         chckbxActive.setEnabled(true);
     }
 
@@ -140,7 +140,7 @@ public class PanelAliases extends JPanel implements UseRadioSelection {
         spinnerID.setEnabled(true);
         textDestination.setEnabled(false);
         comboBoxDomain.setEnabled(false);
-        textSourceMailAddress.setEnabled(false);
+        textSourceUsername.setEnabled(false);
         chckbxActive.setEnabled(false);
     }
 }

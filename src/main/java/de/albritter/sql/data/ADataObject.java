@@ -29,5 +29,5 @@ public abstract class ADataObject implements IDataObject{
     @Setter
     protected int id;
     @Setter
-    protected boolean active;
+    protected int active;
 }

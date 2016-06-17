@@ -19,6 +19,7 @@ import javax.swing.JTabbedPane;
 import lombok.Getter;
 
 public class WindowMain extends JFrame {
+    @Getter
     private final ButtonGroup buttonGroup = new ButtonGroup();
     @Getter
     private final PanelMailbox panelMailbox;
