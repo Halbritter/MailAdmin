@@ -31,6 +31,7 @@ public class CryptoUtils {
             stringBuilder.append(validChars[(new Random()).nextInt(validChars.length - 1)]);
         }
 
+        //   return stringBuilder.toString();
         return stringBuilder.toString() + "$";
     }
 }

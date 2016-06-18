@@ -7,7 +7,6 @@ import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
-import de.albritter.utils.CryptoUtils;
 
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
@@ -53,7 +52,7 @@ public class ApplyListener implements ActionListener {
                     domain = domain.substring(domain.indexOf('@') + 1);
                     ((Mailbox) dataObject).setDomain(domain);
                     ((Mailbox) dataObject).setUsername(user);
-                    ((Mailbox) dataObject).setPassword(Sha512Crypt.Sha512_crypt(src.getPanelMailbox().getPasswordField().getText(), CryptoUtils.getNewSalt(), 5000));
+                    ((Mailbox) dataObject).setPassword(Sha512Crypt.Sha512_crypt(src.getPanelMailbox().getPasswordField().getText(), null, 5000));
                     dataObject.setActive((src.getPanelMailbox().getChckbxActive().isSelected()) ? 1 : 0);
                     ((Mailbox) dataObject).setQuota((Integer) src.getPanelMailbox().getSpinnerQuota().getValue());
                     dataObject.setId((Integer) src.getPanelMailbox().getSpinnerID().getValue());

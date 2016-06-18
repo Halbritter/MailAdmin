@@ -18,12 +18,17 @@
 package de.albritter.sql;
 
 import de.albritter.sql.data.ADataObject;
+import de.albritter.sql.data.Mailbox;
+import lombok.Setter;
+
+import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import lombok.Setter;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by albritter on 04.06.16.
@@ -41,6 +46,10 @@ public final class MySQLHandler {
     private static final String REMOVE_MAILBOX;
     private static final String REMOVE_ALIAS;
     private static final String REMOVE_TLS;
+    private static final String GET_DOMAIN;
+    private static final String GET_MAILBOX;
+    private static final String GET_ALIAS;
+    private static final String GET_TLS;
     @Setter
     private static String password;
     @Setter
@@ -65,6 +74,11 @@ public final class MySQLHandler {
         REMOVE_MAILBOX = "DELETE FROM accounts where id=?;";
         REMOVE_ALIAS = "DELETE FROM aliases where id=?;";
         REMOVE_TLS = "DELETE FROM tlspolicies where id=?;";
+        GET_DOMAIN = "SELECT * FROM domain;";
+        GET_MAILBOX = "SELECT * FROM accounts;";
+        GET_ALIAS = "SELECT * FROM aliases";
+        GET_TLS = "SELECT * FROM tlspolicies";
+
         try {
             // The newInstance() call is a work around for some
             // broken Java implementations
@@ -108,10 +122,12 @@ public final class MySQLHandler {
             }
             // preparedStatement = fill(preparedStatement, sData);
             preparedStatement.setInt(idPos, data.getId());
+            fill(preparedStatement, data.getDataAsArray());
             preparedStatement.execute();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+            e.printStackTrace();
         } finally {
             try {
 
@@ -119,6 +135,7 @@ public final class MySQLHandler {
                 preparedStatement.close();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, e);
+                e.printStackTrace();
             }
         }
     }
@@ -173,6 +190,7 @@ public final class MySQLHandler {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
+            e.printStackTrace();
         }
     }
 
@@ -181,5 +199,24 @@ public final class MySQLHandler {
             preparedStatement.setString(i + 1, data[i]);
         }
         return preparedStatement;
+    }
+
+    public ArrayList<Mailbox> getMailboxes() throws SQLException {
+        Statement statement = conn.createStatement();
+
+        ResultSet resultSet = statement.executeQuery(GET_MAILBOX);
+        ArrayList<Mailbox> mailboxArrayList = new ArrayList<Mailbox>();
+        while (resultSet.next()) {
+            Mailbox m = new Mailbox();
+            m.setId(resultSet.getInt(0));
+            m.setUsername(resultSet.getString(1));
+            m.setDomain(resultSet.getString(2));
+            m.setPassword(resultSet.getString(3));
+            m.setQuota(resultSet.getInt(4));
+            m.setActive(resultSet.getBoolean(5) ? 1 : 0);
+            m.setSendonly(resultSet.getBoolean(5) ? 1 : 0);
+            mailboxArrayList.add(m);
+        }
+        return null;
     }
 }
