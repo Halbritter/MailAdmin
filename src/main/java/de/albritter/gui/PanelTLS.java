@@ -3,9 +3,8 @@ package de.albritter.gui;
 import de.albritter.sql.data.TLSPolicy;
 import de.albritter.utils.EventHandler;
 import de.albritter.utils.UseRadioSelection;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import lombok.Getter;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -13,7 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import lombok.Getter;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 public class PanelTLS extends JPanel implements UseRadioSelection {
     @Getter
@@ -83,7 +84,7 @@ public class PanelTLS extends JPanel implements UseRadioSelection {
         add(lblPolicy, gbc_lblPolicy);
 
         comboBoxPolicy = new JComboBox();
-        comboBoxPolicy.setModel(new DefaultComboBoxModel(TLSPolicy.Policy.values()));
+        comboBoxPolicy.setModel(new DefaultComboBoxModel(TLSPolicy.polices));
         GridBagConstraints gbc_comboBoxPolicy = new GridBagConstraints();
         gbc_comboBoxPolicy.insets = new Insets(0, 0, 5, 5);
         gbc_comboBoxPolicy.fill = GridBagConstraints.HORIZONTAL;
@@ -108,15 +109,6 @@ public class PanelTLS extends JPanel implements UseRadioSelection {
         gbc_textArgument.gridy = 3;
         add(textArgument, gbc_textArgument);
         textArgument.setColumns(10);
-
-        chckbxActive = new JCheckBox("Active");
-        GridBagConstraints gbc_chckbxActive = new GridBagConstraints();
-        gbc_chckbxActive.anchor = GridBagConstraints.WEST;
-        gbc_chckbxActive.insets = new Insets(0, 0, 0, 5);
-        gbc_chckbxActive.gridx = 1;
-        gbc_chckbxActive.gridy = 4;
-        add(chckbxActive, gbc_chckbxActive);
-
     }
 
     @Override
@@ -124,7 +116,6 @@ public class PanelTLS extends JPanel implements UseRadioSelection {
         spinnerID.setEnabled(false);
         comboBoxPolicy.setEnabled(true);
         textDomain.setEnabled(true);
-        chckbxActive.setEnabled(true);
 
     }
 
@@ -133,7 +124,6 @@ public class PanelTLS extends JPanel implements UseRadioSelection {
         spinnerID.setEnabled(true);
         comboBoxPolicy.setEnabled(true);
         textDomain.setEnabled(true);
-        chckbxActive.setEnabled(true);
     }
 
     @Override
@@ -141,6 +131,5 @@ public class PanelTLS extends JPanel implements UseRadioSelection {
         spinnerID.setEnabled(true);
         comboBoxPolicy.setEnabled(false);
         textDomain.setEnabled(false);
-        chckbxActive.setEnabled(false);
     }
 }

@@ -35,8 +35,10 @@ public class ApplyListener implements ActionListener {
 
         switch (src.getTabbedPane().getSelectedIndex()) {
             case 0:
+                System.out.println("Working on domain");
                 try {
                     dataObject = new Domain();
+                    dataObject.setId((Integer) src.getPanelDomain().getSpinnerID().getValue());
                     ((Domain) dataObject).setDomain(src.getPanelDomain().getTextDomain().getText());
                     break;
                 } catch (IndexOutOfBoundsException ex) {
@@ -83,10 +85,10 @@ public class ApplyListener implements ActionListener {
             case 3: //TLS
                 try {
                     dataObject = new TLSPolicy();
-                    dataObject.setActive(src.getPanelTLS().getChckbxActive().isSelected() ? 1 : 0);
+
                     dataObject.setId((Integer) src.getPanelTLS().getSpinnerID().getValue());
                     ((TLSPolicy) dataObject).setParms(src.getPanelTLS().getTextArgument().getText());
-                    ((TLSPolicy) dataObject).setPolicy((TLSPolicy.Policy) src.getPanelTLS().getComboBoxPolicy().getSelectedItem());
+                    ((TLSPolicy) dataObject).setPolicy((String) src.getPanelTLS().getComboBoxPolicy().getSelectedItem());
                     ((TLSPolicy) dataObject).setDomain(src.getPanelTLS().getTextDomain().getText());
                     break;
                 } catch (IndexOutOfBoundsException ex) {

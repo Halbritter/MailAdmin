@@ -1,21 +1,21 @@
 package de.albritter.gui.tables;
 
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
 
 /**
  * Created by hhalbritter on 14.06.2016.
  */
 public class TLSTable extends JPanel implements UpdateTabel {
-    public static final String[] HEADER = new String[]{"ID", "Domain", "Parameter", "Active"};
+    public static final String[] HEADER = new String[]{"ID", "Domain", "Parameter"};
     private Object[][] data;
     private DataTable table;
 
     public TLSTable() {
         setLayout(new BorderLayout());
         table = new DataTable(HEADER);
-        table.updateTable(new Object[][]{{5, "Domain.tld", "params", true}});
+        table.updateTable(new Object[][]{{5, "Domain.tld", "params"}});
         add(new JScrollPane(table));
     }
 

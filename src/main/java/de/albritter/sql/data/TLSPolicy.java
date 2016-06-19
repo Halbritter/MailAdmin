@@ -25,20 +25,19 @@ import lombok.Setter;
  */
 public class TLSPolicy extends ADataObject {
 
+    public static String[] polices = new String[]{"NONE", "MAY", "ENCRYPT", "DANE", "DANE_ONLY", "VERYFY", "SECURE"};
     @Setter
     protected int active;
     @Setter
     private String domain;
     @Setter
-    private Policy policy;
+    private String policy;
     @Setter
     private String parms;
 
     public String[] getDataAsArray() {
-        return new String[]{domain, policy.name().toLowerCase(), parms, String.valueOf(active)};
+        return new String[]{domain, policy.toLowerCase(), parms, String.valueOf(active)};
     }
-
-    public enum Policy {NONE, MAY, ENCRYPT, DANE, DANE_ONLY, VERYFY, SECURE}
 
 
 }

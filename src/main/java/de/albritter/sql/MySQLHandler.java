@@ -190,7 +190,8 @@ public final class MySQLHandler {
                     preparedStatement = conn.prepareStatement(REMOVE_TLS);
                     break;
             }
-
+            preparedStatement.setInt(1, data.getId());
+            preparedStatement.execute();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
             e.printStackTrace();
@@ -198,8 +199,13 @@ public final class MySQLHandler {
     }
 
     private static PreparedStatement fill(PreparedStatement preparedStatement, String[] data) throws SQLException {
-        for (int i = 0; i < data.length; i++) {
-            preparedStatement.setString(i + 1, data[i]);
+        try {
+            for (int i = 0; i < data.length; i++) {
+                preparedStatement.setString(i + 1, data[i]);
+                System.out.println("insert " + data[i]);
+            }
+        } catch (Exception e) {
+
         }
         return preparedStatement;
     }
@@ -302,7 +308,7 @@ public final class MySQLHandler {
                 TLSPolicy t = new TLSPolicy();
                 t.setId(resultSet.getInt(0));
                 t.setDomain(resultSet.getString(1));
-                t.setPolicy((TLSPolicy.Policy) resultSet.getObject(2));
+                t.setPolicy(resultSet.getString(2));
                 tlsPolicyArrayList.add(t);
             }
         } catch (SQLException e) {

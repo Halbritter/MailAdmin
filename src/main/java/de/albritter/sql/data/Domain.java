@@ -18,7 +18,6 @@
 
 package de.albritter.sql.data;
 
-import lombok.Getter;
 import lombok.Setter;
 
 /**
@@ -28,9 +27,6 @@ public class Domain extends ADataObject {
 
     @Setter
     private String domain;
-    @Setter
-    @Getter
-    private int id;
 
     public String[] getDataAsArray() {
         return new String[]{domain};
