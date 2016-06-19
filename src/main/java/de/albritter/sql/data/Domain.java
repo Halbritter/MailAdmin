@@ -27,8 +27,6 @@ import lombok.Setter;
 public class Domain extends ADataObject {
 
     @Setter
-    protected int active;
-    @Setter
     private String domain;
     @Setter
     @Getter
