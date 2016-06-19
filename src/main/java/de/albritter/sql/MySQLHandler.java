@@ -18,7 +18,10 @@
 package de.albritter.sql;
 
 import de.albritter.sql.data.ADataObject;
+import de.albritter.sql.data.Aliases;
+import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
+import de.albritter.sql.data.TLSPolicy;
 import lombok.Setter;
 
 import javax.swing.JOptionPane;
@@ -201,22 +204,118 @@ public final class MySQLHandler {
         return preparedStatement;
     }
 
-    public ArrayList<Mailbox> getMailboxes() throws SQLException {
-        Statement statement = conn.createStatement();
-
-        ResultSet resultSet = statement.executeQuery(GET_MAILBOX);
+    public static ArrayList<Mailbox> getMailboxes() {
+        Statement statement = null;
+        ResultSet resultSet = null;
         ArrayList<Mailbox> mailboxArrayList = new ArrayList<Mailbox>();
-        while (resultSet.next()) {
-            Mailbox m = new Mailbox();
-            m.setId(resultSet.getInt(0));
-            m.setUsername(resultSet.getString(1));
-            m.setDomain(resultSet.getString(2));
-            m.setPassword(resultSet.getString(3));
-            m.setQuota(resultSet.getInt(4));
-            m.setActive(resultSet.getBoolean(5) ? 1 : 0);
-            m.setSendonly(resultSet.getBoolean(5) ? 1 : 0);
-            mailboxArrayList.add(m);
+        try {
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(GET_MAILBOX);
+            while (resultSet.next()) {
+                Mailbox m = new Mailbox();
+                m.setId(resultSet.getInt(0));
+                m.setUsername(resultSet.getString(1));
+                m.setDomain(resultSet.getString(2));
+                m.setPassword(resultSet.getString(3));
+                m.setQuota(resultSet.getInt(4));
+                m.setActive(resultSet.getBoolean(5) ? 1 : 0);
+                m.setSendonly(resultSet.getInt(5));
+                mailboxArrayList.add(m);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+            e.printStackTrace();
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+            } catch (SQLException e) {
+            }
         }
-        return null;
+        return mailboxArrayList;
+    }
+
+    public static ArrayList<Domain> getDomains() {
+        ArrayList<Domain> domainArrayList = new ArrayList<Domain>();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(GET_MAILBOX);
+            while (resultSet.next()) {
+                Domain d = new Domain();
+                d.setId(resultSet.getInt(0));
+                d.setDomain(resultSet.getString(1));
+                domainArrayList.add(d);
+            }
+        } catch (SQLException e) {
+
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+            } catch (SQLException e) {
+
+            }
+        }
+        return domainArrayList;
+    }
+
+    public static ArrayList<Aliases> getAliases() {
+        ArrayList<Aliases> aliasesArrayList = new ArrayList<Aliases>();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(GET_MAILBOX);
+            while (resultSet.next()) {
+                Aliases a = new Aliases();
+                a.setId(resultSet.getInt(0));
+                a.setSourceUsername(resultSet.getString(1));
+                a.setSourceDomain(resultSet.getString(2));
+                a.setDestinationUsername(resultSet.getString(3));
+                a.setDestinationDomain(resultSet.getString(4));
+                a.setActive(resultSet.getInt(5));
+                aliasesArrayList.add(a);
+            }
+        } catch (SQLException e) {
+
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+            } catch (SQLException e) {
+
+            }
+        }
+        return aliasesArrayList;
+    }
+
+    public static ArrayList<TLSPolicy> getTlsPolicies() {
+        ArrayList<TLSPolicy> tlsPolicyArrayList = new ArrayList<TLSPolicy>();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(GET_MAILBOX);
+            while (resultSet.next()) {
+                TLSPolicy t = new TLSPolicy();
+                t.setId(resultSet.getInt(0));
+                t.setDomain(resultSet.getString(1));
+                t.setPolicy((TLSPolicy.Policy) resultSet.getObject(2));
+                tlsPolicyArrayList.add(t);
+            }
+        } catch (SQLException e) {
+
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+            } catch (SQLException e) {
+
+            }
+        }
+        return tlsPolicyArrayList;
+
     }
 }
