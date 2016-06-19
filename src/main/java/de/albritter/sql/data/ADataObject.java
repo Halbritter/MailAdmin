@@ -24,9 +24,13 @@ import lombok.Setter;
 /**
  * Created by albritter on 05.06.16.
  */
-public abstract class ADataObject implements IDataObject{
+public abstract class ADataObject implements IDataObject {
     @Getter
     @Setter
     protected int id;
+
+    @Getter
+    @Setter
+    protected int active;
 
 }
