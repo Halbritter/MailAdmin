@@ -26,17 +26,15 @@ import lombok.Setter;
 public class Aliases extends ADataObject {
 
     @Setter
+    protected int active;
+    @Setter
     private String sourceUsername;
-
     @Setter
     private String sourceDomain;
-
     @Setter
     private String destinationUsername;
-
     @Setter
     private String destinationDomain;
-
 
     public String[] getDataAsArray() {
         return new String[]{sourceUsername, sourceDomain, destinationUsername, destinationDomain, String.valueOf(active)};

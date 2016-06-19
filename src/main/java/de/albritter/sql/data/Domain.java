@@ -27,11 +27,12 @@ import lombok.Setter;
 public class Domain extends ADataObject {
 
     @Setter
+    protected int active;
+    @Setter
     private String domain;
     @Setter
     @Getter
     private int id;
-
 
     public String[] getDataAsArray() {
         return new String[]{domain};

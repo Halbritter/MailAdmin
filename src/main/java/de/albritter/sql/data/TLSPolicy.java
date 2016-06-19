@@ -26,6 +26,8 @@ import lombok.Setter;
 public class TLSPolicy extends ADataObject {
 
     @Setter
+    protected int active;
+    @Setter
     private String domain;
     @Setter
     private Policy policy;

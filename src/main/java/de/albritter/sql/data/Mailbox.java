@@ -27,6 +27,8 @@ import lombok.Setter;
  */
 public class Mailbox extends ADataObject {
     @Setter
+    protected int active;
+    @Setter
     private String username;
     @Setter
     private String domain;
@@ -36,7 +38,6 @@ public class Mailbox extends ADataObject {
     private int quota;
     @Setter
     private int sendonly;
-
 
     public String[] getDataAsArray() {
         //return new String[]{username, domain, "{SHA512-CRYPT}" + Sha512Crypt.Sha512_crypt(password, "$6$"+CryptoUtils.getNewSalt()+"$", 5000), String.valueOf(quota), String.valueOf(enabled), String.valueOf(sendonly)};

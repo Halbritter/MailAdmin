@@ -28,6 +28,5 @@ public abstract class ADataObject implements IDataObject{
     @Getter
     @Setter
     protected int id;
-    @Setter
-    protected int active;
+
 }
