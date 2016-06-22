@@ -15,19 +15,20 @@ sourceCompatibility = 1.7
 repositories {
     mavenCentral()
 }
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.8'
+    provided group: 'org.projectlombok', name: 'lombok', version: '1.16.8'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.39'
 
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'mysql', name: 'mysql-connector-java', version: '5.1.39'
-        classpath group: 'org.projectlombok', name: 'lombok', version: '1.16.8'
-    }
-}
