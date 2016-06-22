@@ -1,5 +1,6 @@
 package de.albritter.gui;
 
+import de.albritter.sql.MySQLHandler;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -12,13 +13,14 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class Window extends JFrame {
     private JTextField txtServer;
     private JTextField txtDatabase;
     private JTextField txtUsername;
-    private JTextField txtPassword;
+    private JPasswordField txtPassword;
 
     public Window() {
         super("Login");
@@ -100,7 +102,7 @@ public class Window extends JFrame {
         gbc_lblNewLabel_3.gridy = 4;
         getContentPane().add(lblNewLabel_3, gbc_lblNewLabel_3);
 
-        txtPassword = new JTextField();
+        txtPassword = new JPasswordField();
         GridBagConstraints gbc_textField_3 = new GridBagConstraints();
         gbc_textField_3.gridwidth = 3;
         gbc_textField_3.insets = new Insets(0, 0, 5, 5);
@@ -162,5 +164,14 @@ public class Window extends JFrame {
                 }
             }
         });
+    }
+
+    public boolean openMySQLConection() {
+        MySQLHandler.setServer(this.txtServer.getText());
+        MySQLHandler.setUser(this.txtUsername.getText());
+        MySQLHandler.setDb(this.txtDatabase.getText());
+        MySQLHandler.setPassword(this.txtPassword.getText());
+
+        return MySQLHandler.openConnection();
     }
 }

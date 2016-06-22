@@ -1,6 +1,5 @@
 package de.albritter.utils;
 
-import com.sun.istack.internal.NotNull;
 import de.albritter.gui.tables.UpdateTabel;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,13 +11,11 @@ public final class EventHandler {
     private static ArrayList<UseRadioSelection> useRadioSelection = new ArrayList<UseRadioSelection>();
     private static ArrayList<UpdateTabel> updateTabel = new ArrayList<UpdateTabel>();
 
-    @NotNull
     public static <T extends UseRadioSelection> void registerForRadioEvent(T obj) {
         useRadioSelection.add(obj);
     }
 
-    @NotNull
-    public static <T extends UpdateTabel> void registerForUpdateTableEvent(@NotNull T obj) {
+    public static <T extends UpdateTabel> void registerForUpdateTableEvent(T obj) {
         updateTabel.add(obj);
     }
 

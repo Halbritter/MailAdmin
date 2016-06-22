@@ -22,9 +22,6 @@ import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
-import lombok.Setter;
-
-import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,6 +29,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import lombok.Setter;
 
 /**
  * Created by albritter on 04.06.16.
@@ -91,7 +90,7 @@ public final class MySQLHandler {
         }
     }
 
-    public static void openConnection() {
+    public static boolean openConnection() {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://" + server + "/" + db + "?requireSSL=true&serverTimezone=Europe/Berlin", user, password);
 
@@ -99,6 +98,12 @@ public final class MySQLHandler {
             JOptionPane.showMessageDialog(null, e.getStackTrace(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+        try {
+            return conn.isValid(500);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static <T extends ADataObject> void update(T data) {

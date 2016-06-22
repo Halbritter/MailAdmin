@@ -1,3 +1,4 @@
+import de.albritter.gui.Window;
 import de.albritter.gui.WindowMain;
 import de.albritter.utils.EventHandler;
 
@@ -6,6 +7,8 @@ import de.albritter.utils.EventHandler;
  */
 public class Main {
     public static void main(String[] argv) {
+        Window win = new Window();
+        win.setVisible(true);
         WindowMain w = new WindowMain();
         w.setVisible(true);
         w.setSize(600, 400);
