@@ -4,8 +4,11 @@ import de.albritter.gui.tables.AliasTable;
 import de.albritter.gui.tables.DomainTable;
 import de.albritter.gui.tables.MailboxTable;
 import de.albritter.gui.tables.TLSTable;
-import lombok.Getter;
-
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -13,11 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import lombok.Getter;
 
 public class WindowMain extends JFrame {
     private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -39,6 +38,14 @@ public class WindowMain extends JFrame {
     private JRadioButton rdbtnRemove;
     private JPanel swapPanel;
     private JPanel InputField;
+    @Getter
+    private JPanel pTLS;
+    @Getter
+    private JPanel pAliases;
+    @Getter
+    private JPanel pMailboxes;
+    @Getter
+    private JPanel pDomains;
 
     /**
      * Create the frame.
@@ -102,18 +109,17 @@ public class WindowMain extends JFrame {
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         getContentPane().add(tabbedPane, BorderLayout.CENTER);
         tabbedPane.addChangeListener(new TabbedItemListener(tabbedPane));
-
-        JPanel pDomains = new DomainTable();
+        pDomains = new DomainTable();
         tabbedPane.addTab("Domains", null, pDomains, null);
 
 
-        JPanel pMailboxes = new MailboxTable();
+        pMailboxes = new MailboxTable();
         tabbedPane.addTab("Mailboxes", null, pMailboxes, null);
 
-        JPanel pAliases = new AliasTable();
+        pAliases = new AliasTable();
         tabbedPane.addTab("Aliases", null, pAliases, null);
 
-        JPanel pTLS = new TLSTable();
+        pTLS = new TLSTable();
         tabbedPane.addTab("TLS", null, pTLS, null);
 
     }

@@ -36,6 +36,7 @@ public class AliasTable extends JPanel implements UpdateTabel {
     @Override
     public void updateAliasTable(Object[][] data) {
         table.updateTable(data);
+
     }
 
     @Override

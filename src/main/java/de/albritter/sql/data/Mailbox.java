@@ -18,8 +18,6 @@
 
 package de.albritter.sql.data;
 
-import arlut.csd.crypto.Sha512Crypt;
-import de.albritter.utils.CryptoUtils;
 import lombok.Setter;
 
 /**
@@ -40,7 +38,8 @@ public class Mailbox extends ADataObject {
     private int sendonly;
 
     public String[] getDataAsArray() {
+        System.out.println("{SHA512-CRYPT}" + password);
         //return new String[]{username, domain, "{SHA512-CRYPT}" + Sha512Crypt.Sha512_crypt(password, "$6$"+CryptoUtils.getNewSalt()+"$", 5000), String.valueOf(quota), String.valueOf(enabled), String.valueOf(sendonly)};
-        return new String[]{username, domain, "{SHA512-CRYPT}" + Sha512Crypt.Sha512_crypt(password, CryptoUtils.getNewSalt(), 5000), String.valueOf(quota), String.valueOf(active), String.valueOf(sendonly)};
+        return new String[]{username, domain, "{SHA512-CRYPT}" + password, String.valueOf(quota), String.valueOf(active), String.valueOf(sendonly)};
     }
 }

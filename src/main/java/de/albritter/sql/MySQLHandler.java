@@ -197,6 +197,7 @@ public final class MySQLHandler {
             }
             preparedStatement.setInt(1, data.getId());
             preparedStatement.execute();
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
             e.printStackTrace();
@@ -224,13 +225,13 @@ public final class MySQLHandler {
             resultSet = statement.executeQuery(GET_MAILBOX);
             while (resultSet.next()) {
                 Mailbox m = new Mailbox();
-                m.setId(resultSet.getInt(0));
-                m.setUsername(resultSet.getString(1));
-                m.setDomain(resultSet.getString(2));
-                m.setPassword(resultSet.getString(3));
-                m.setQuota(resultSet.getInt(4));
-                m.setActive(resultSet.getBoolean(5) ? 1 : 0);
-                m.setSendonly(resultSet.getInt(5));
+                m.setId(resultSet.getInt(1));
+                m.setUsername(resultSet.getString(2));
+                m.setDomain(resultSet.getString(3));
+                m.setPassword(resultSet.getString(4));
+                m.setQuota(resultSet.getInt(5));
+                m.setActive(resultSet.getBoolean(6) ? 1 : 0);
+                m.setSendonly(resultSet.getInt(7));
                 mailboxArrayList.add(m);
             }
         } catch (SQLException e) {
@@ -255,8 +256,8 @@ public final class MySQLHandler {
             resultSet = statement.executeQuery(GET_MAILBOX);
             while (resultSet.next()) {
                 Domain d = new Domain();
-                d.setId(resultSet.getInt(0));
-                d.setDomain(resultSet.getString(1));
+                d.setId(resultSet.getInt(1));
+                d.setDomain(resultSet.getString(2));
                 domainArrayList.add(d);
             }
         } catch (SQLException e) {
@@ -281,12 +282,12 @@ public final class MySQLHandler {
             resultSet = statement.executeQuery(GET_MAILBOX);
             while (resultSet.next()) {
                 Aliases a = new Aliases();
-                a.setId(resultSet.getInt(0));
-                a.setSourceUsername(resultSet.getString(1));
-                a.setSourceDomain(resultSet.getString(2));
-                a.setDestinationUsername(resultSet.getString(3));
-                a.setDestinationDomain(resultSet.getString(4));
-                a.setActive(resultSet.getInt(5));
+                a.setId(resultSet.getInt(1));
+                a.setSourceUsername(resultSet.getString(2));
+                a.setSourceDomain(resultSet.getString(3));
+                a.setDestinationUsername(resultSet.getString(4));
+                a.setDestinationDomain(resultSet.getString(5));
+                a.setActive(resultSet.getInt(6));
                 aliasesArrayList.add(a);
             }
         } catch (SQLException e) {
@@ -311,9 +312,9 @@ public final class MySQLHandler {
             resultSet = statement.executeQuery(GET_MAILBOX);
             while (resultSet.next()) {
                 TLSPolicy t = new TLSPolicy();
-                t.setId(resultSet.getInt(0));
-                t.setDomain(resultSet.getString(1));
-                t.setPolicy(resultSet.getString(2));
+                t.setId(resultSet.getInt(1));
+                t.setDomain(resultSet.getString(2));
+                t.setPolicy(resultSet.getString(3));
                 tlsPolicyArrayList.add(t);
             }
         } catch (SQLException e) {

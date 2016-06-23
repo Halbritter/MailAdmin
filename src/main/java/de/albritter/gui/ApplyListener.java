@@ -7,10 +7,9 @@ import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
-
-import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  * Created by hhalbritter on 15.06.2016.
@@ -32,19 +31,21 @@ public class ApplyListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String domain, user;
         ADataObject dataObject = null;
+        int dbug = 0;
 
         switch (src.getTabbedPane().getSelectedIndex()) {
             case 0:
-                System.out.println("Working on domain");
                 try {
                     dataObject = new Domain();
                     dataObject.setId((Integer) src.getPanelDomain().getSpinnerID().getValue());
                     ((Domain) dataObject).setDomain(src.getPanelDomain().getTextDomain().getText());
                     break;
                 } catch (IndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(src, "Bitte überprüfen Sie ihre eingabe");
-
-                    return;
+                    if (src.getRdbtnAdd().isSelected() || src.getRdbtnUpadte().isSelected()) {
+                        JOptionPane.showMessageDialog(src, "Bitte \u00fcberpr\u00fcfen Sie Ihre eingabe");
+                        return;
+                    }
+                    dataObject.setId((Integer) src.getPanelDomain().getSpinnerID().getValue());
                 }
             case 1://Mailbox
                 try {
@@ -60,8 +61,12 @@ public class ApplyListener implements ActionListener {
                     dataObject.setId((Integer) src.getPanelMailbox().getSpinnerID().getValue());
                     ((Mailbox) dataObject).setSendonly((src.getPanelMailbox().getChckbxSendonly().isSelected()) ? 1 : 0);
                 } catch (IndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(src, "Bitte überprüfen Sie ihre eingabe");
-                    return;
+                    if (src.getRdbtnAdd().isSelected() || src.getRdbtnUpadte().isSelected()) {
+                        JOptionPane.showMessageDialog(src, "Bitte \u00fcberpr\u00fcfen Sie Ihre eingabe");
+                        return;
+                    }
+                    dataObject.setId((Integer) src.getPanelMailbox().getSpinnerID().getValue());
+
                 }
 
                 break;
@@ -79,8 +84,11 @@ public class ApplyListener implements ActionListener {
                     dataObject.setActive(src.getPanelAliases().getChckbxActive().isSelected() ? 1 : 0);
                     break;
                 } catch (IndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(src, "Bitte überprüfen Sie ihre eingabe");
-                    return;
+                    if (src.getRdbtnAdd().isSelected() || src.getRdbtnUpadte().isSelected()) {
+                        JOptionPane.showMessageDialog(src, "Bitte \u00fcberpr\u00fcfen Sie Ihre eingabe");
+                        return;
+                    }
+                    dataObject.setId((Integer) src.getPanelAliases().getSpinnerID().getValue());
                 }
             case 3: //TLS
                 try {
@@ -92,12 +100,13 @@ public class ApplyListener implements ActionListener {
                     ((TLSPolicy) dataObject).setDomain(src.getPanelTLS().getTextDomain().getText());
                     break;
                 } catch (IndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(src, "Bitte überprüfen Sie ihre eingabe");
-                    return;
+                    if (src.getRdbtnAdd().isSelected() || src.getRdbtnUpadte().isSelected()) {
+                        JOptionPane.showMessageDialog(src, "Bitte \u00fcberpr\u00fcfen Sie Ihre eingabe");
+                        return;
+                    }
+                    dataObject.setId((Integer) src.getPanelTLS().getSpinnerID().getValue());
                 }
         }
-
-        //todo Logic for update add and remove radiobuttons
         if (src.getRdbtnAdd().isSelected()) {
             MySQLHandler.add(dataObject);
         } else if (src.getRdbtnUpadte().isSelected()) {
@@ -108,8 +117,6 @@ public class ApplyListener implements ActionListener {
             if (result == JOptionPane.YES_OPTION) {
                 MySQLHandler.remove(dataObject);
             }
-
-
         }
     }
 }
