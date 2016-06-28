@@ -7,11 +7,10 @@ import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
-import de.albritter.utils.EventHandler;
+
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  * Created by hhalbritter on 15.06.2016.
@@ -121,13 +120,5 @@ public class ApplyListener implements ActionListener {
             }
         }
 
-        ArrayList<Mailbox> mailboxArrayList = MySQLHandler.getMailboxes();
-        Mailbox[] mailboxArray = mailboxArrayList.toArray(new Mailbox[0]);
-        String[][] s = new String[mailboxArray.length][];
-        for (Mailbox mail : mailboxArray) {
-
-        }
-//        = (String[][]) mailboxArrayList.toArray();
-        EventHandler.updateMailboxTable(s);
     }
 }
