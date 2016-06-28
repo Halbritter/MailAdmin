@@ -32,6 +32,6 @@ public class CryptoUtils {
         }
 
         //   return stringBuilder.toString();
-        return stringBuilder.toString() + "$";
+        return stringBuilder.toString();
     }
 }
