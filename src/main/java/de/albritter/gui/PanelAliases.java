@@ -1,29 +1,48 @@
+/*
+ * This file is part of VMail.
+ *
+ *     VMail is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 2 of the License, or
+ *     (at your option) any later version.
+ *
+ *     VMail is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.albritter.gui;
 
 import de.albritter.utils.EventHandler;
 import de.albritter.utils.UseRadioSelection;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import lombok.Getter;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import lombok.Getter;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 public class PanelAliases extends JPanel implements UseRadioSelection {
     @Getter
-    private JTextField textSourceUsername;
+    private final JTextField textSourceUsername;
     @Getter
-    private JTextField textDestination;
+    private final JTextField textDestination;
     @Getter
-    private JCheckBox chckbxActive;
+    private final JCheckBox chckbxActive;
     @Getter
-    private JComboBox comboBoxDomain;
+    private final JComboBox comboBoxDomain;
     @Getter
-    private JSpinner spinnerID;
+    private final JSpinner spinnerID;
 
     /**
      * Create the panel.
@@ -142,5 +161,9 @@ public class PanelAliases extends JPanel implements UseRadioSelection {
         comboBoxDomain.setEnabled(false);
         textSourceUsername.setEnabled(false);
         chckbxActive.setEnabled(false);
+    }
+
+    public void updateCombobox(String[] domains) {
+        comboBoxDomain.setModel(new DefaultComboBoxModel<>(domains));
     }
 }

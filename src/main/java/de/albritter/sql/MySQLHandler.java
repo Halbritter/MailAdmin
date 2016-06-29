@@ -1,31 +1,32 @@
 /*
- * Copyright (C) 2016 albritter
+ * This file is part of VMail.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ *     VMail is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 2 of the License, or
+ *     (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *     VMail is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     You should have received a copy of the GNU General Public License
+ *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 package de.albritter.sql;
 
 import de.albritter.sql.data.ADataObject;
+import static java.sql.ResultSet.CONCUR_READ_ONLY;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import lombok.Setter;
 
 /**
  * Created by albritter on 04.06.16.
@@ -57,6 +58,9 @@ public final class MySQLHandler {
     private static String db;
     private static PreparedStatement preparedStatement;
     private static Connection conn;
+    @Getter
+    private static String[] currentDomainSet;
+
 
     static {
         ADD_DOMAIN = "INSERT INTO domains (domain) VALUES (?)";
@@ -254,6 +258,7 @@ public final class MySQLHandler {
             resultSet = statement.getResultSet();
             resultSet.last();
             Object[][] data = new Object[resultSet.getRow()][2];
+            currentDomainSet = new String[resultSet.getRow()];
             resultSet.beforeFirst();
             while (resultSet.next()) {
                 Object[] mailbox = new Object[3];
@@ -262,10 +267,13 @@ public final class MySQLHandler {
                         mailbox[i] = resultSet.getInt(i + 1);
                     } else {
                         mailbox[i] = resultSet.getObject(i + 1);
+
                     }
                 }
+                currentDomainSet[resultSet.getRow() - 1] = (String) mailbox[1];
                 data[resultSet.getRow() - 1] = mailbox;
             }
+
             return data;
 
         } catch (SQLException e) {
