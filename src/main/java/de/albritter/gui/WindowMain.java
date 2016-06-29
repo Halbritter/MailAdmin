@@ -4,6 +4,8 @@ import de.albritter.gui.tables.AliasTable;
 import de.albritter.gui.tables.DomainTable;
 import de.albritter.gui.tables.MailboxTable;
 import de.albritter.gui.tables.TLSTable;
+import de.albritter.sql.MySQLHandler;
+import de.albritter.utils.EventHandler;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
@@ -121,6 +123,7 @@ public class WindowMain extends JFrame {
 
         pTLS = new TLSTable();
         tabbedPane.addTab("TLS", null, pTLS, null);
+        this.updateTables();
 
     }
 
@@ -155,5 +158,11 @@ public class WindowMain extends JFrame {
         this.repaint();
     }
 
+    public void updateTables() {
+        EventHandler.updateMailboxTable(MySQLHandler.getMailboxes());
+        EventHandler.updateAliasTable(MySQLHandler.getAliases());
+        EventHandler.updateDomainTable(MySQLHandler.getDomains());
+        EventHandler.updateTLSTable(MySQLHandler.getTlsPolicies());
+    }
 
 }

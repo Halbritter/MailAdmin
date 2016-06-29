@@ -18,15 +18,14 @@
 package de.albritter.sql;
 
 import de.albritter.sql.data.ADataObject;
-import lombok.Setter;
-
-import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import java.sql.SQLException;
-import java.sql.Statement;
+import javax.swing.JOptionPane;
+import lombok.Setter;
 
 /**
  * Created by albritter on 04.06.16.
@@ -72,10 +71,10 @@ public final class MySQLHandler {
         REMOVE_MAILBOX = "DELETE FROM accounts where id=?;";
         REMOVE_ALIAS = "DELETE FROM aliases where id=?;";
         REMOVE_TLS = "DELETE FROM tlspolicies where id=?;";
-        GET_DOMAIN = "SELECT * FROM domain;";
-        GET_MAILBOX = "SELECT * FROM accounts;";
-        GET_ALIAS = "SELECT * FROM aliases";
-        GET_TLS = "SELECT * FROM tlspolicies";
+        GET_DOMAIN = "SELECT * FROM domains ORDER BY id;";
+        GET_MAILBOX = "SELECT * FROM accounts ORDER BY id;";
+        GET_ALIAS = "SELECT * FROM aliases ORDER BY id;";
+        GET_TLS = "SELECT * FROM tlspolicies ORDER BY id;";
 
         try {
             // The newInstance() call is a work around for some
@@ -145,7 +144,6 @@ public final class MySQLHandler {
     }
 
     public static <T extends ADataObject> void add(T data) {
-        System.out.println("Add Statemnt");
         PreparedStatement preparedStatement = null;
         String[] sData = data.getDataAsArray();
         try {
@@ -155,7 +153,6 @@ public final class MySQLHandler {
                     break;
                 case "Mailbox":
                     preparedStatement = conn.prepareStatement(ADD_MAILBOX);
-                    System.out.print(data.getDataAsArray());
                     break;
                 case "Aliases":
                     preparedStatement = conn.prepareStatement(ADD_ALIAS);
@@ -204,7 +201,7 @@ public final class MySQLHandler {
         try {
             for (int i = 0; i < data.length; i++) {
                 preparedStatement.setString(i + 1, data[i]);
-                System.out.println("insert " + data[i]);
+                //  System.out.println("insert " + data[i]);
             }
         } catch (Exception e) {
 
@@ -212,36 +209,134 @@ public final class MySQLHandler {
         return preparedStatement;
     }
 
-    public static String[] getMailboxes() {
-        Statement statement = null;
+    public static Object[][] getMailboxes() {
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
-
         try {
-            statement = conn.createStatement();
-            statement.execute(GET_MAILBOX);
+
+            statement = conn.prepareStatement(GET_MAILBOX, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    CONCUR_READ_ONLY);
+            statement.execute();
             resultSet = statement.getResultSet();
-            
+            resultSet.last();
+            Object[][] data = new Object[resultSet.getRow()][7];
+            resultSet.beforeFirst();
+            while (resultSet.next()) {
+                Object[] mailbox = new Object[7];
+                for (int i = 0; i < 7; i++) {
+                    //     System.out.println(resultSet.getObject(i + 1));
+                    if (0 == i) {
+                        mailbox[i] = resultSet.getInt(i + 1);
+                    } else if (6 == i || 5 == i) {
+                        mailbox[i] = resultSet.getBoolean(i + 1);
+                    } else {
+                        mailbox[i] = resultSet.getObject(i + 1);
+                    }
+                }
+                data[resultSet.getRow() - 1] = mailbox;
+            }
+            return data;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static String[] getDomains() {
-        Statement statement = null;
+    public static Object[][] getDomains() {
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
+        try {
+
+            statement = conn.prepareStatement(GET_DOMAIN, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    CONCUR_READ_ONLY);
+            statement.execute();
+            resultSet = statement.getResultSet();
+            resultSet.last();
+            Object[][] data = new Object[resultSet.getRow()][2];
+            resultSet.beforeFirst();
+            while (resultSet.next()) {
+                Object[] mailbox = new Object[3];
+                for (int i = 0; i < 2; i++) {
+                    if (0 == i) {
+                        mailbox[i] = resultSet.getInt(i + 1);
+                    } else {
+                        mailbox[i] = resultSet.getObject(i + 1);
+                    }
+                }
+                data[resultSet.getRow() - 1] = mailbox;
+            }
+            return data;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
-    public static String[] getAliases() {
-        Statement statement = null;
+    public static Object[][] getAliases() {
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
+        try {
+
+            statement = conn.prepareStatement(GET_ALIAS, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    CONCUR_READ_ONLY);
+            statement.execute();
+            resultSet = statement.getResultSet();
+            resultSet.last();
+            Object[][] data = new Object[resultSet.getRow()][6];
+            resultSet.beforeFirst();
+            while (resultSet.next()) {
+                Object[] mailbox = new Object[6];
+                for (int i = 0; i < 6; i++) {
+                    // System.out.println(resultSet.getObject(i + 1));
+                    if (0 == i) {
+                        mailbox[i] = resultSet.getInt(i + 1);
+                    } else if (5 == i) {
+                        mailbox[i] = resultSet.getBoolean(i + 1);
+                    } else {
+                        mailbox[i] = resultSet.getObject(i + 1);
+                    }
+                }
+                data[resultSet.getRow() - 1] = mailbox;
+            }
+            return data;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
-    public static String[] getTlsPolicies() {
-        Statement statement = null;
+    public static Object[][] getTlsPolicies() {
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
+        try {
+
+            statement = conn.prepareStatement(GET_TLS, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    CONCUR_READ_ONLY);
+            statement.execute();
+            resultSet = statement.getResultSet();
+            resultSet.last();
+            Object[][] data = new Object[resultSet.getRow()][3];
+            resultSet.beforeFirst();
+            while (resultSet.next()) {
+                Object[] mailbox = new Object[3];
+                for (int i = 0; i < 3; i++) {
+                    // System.out.println(resultSet.getObject(i + 1));
+                    if (0 == i) {
+                        mailbox[i] = resultSet.getInt(i + 1);
+                    } else {
+                        mailbox[i] = resultSet.getObject(i + 1);
+                    }
+                }
+                data[resultSet.getRow() - 1] = mailbox;
+            }
+            return data;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

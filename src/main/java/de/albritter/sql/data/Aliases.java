@@ -24,7 +24,6 @@ import lombok.Setter;
  * Created by albritter on 04.06.16.
  */
 public class Aliases extends ADataObject {
-
     @Setter
     protected int active;
     @Setter

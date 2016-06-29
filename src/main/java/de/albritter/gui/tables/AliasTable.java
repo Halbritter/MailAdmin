@@ -1,5 +1,6 @@
 package de.albritter.gui.tables;
 
+import de.albritter.utils.EventHandler;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,11 +13,9 @@ public class AliasTable extends JPanel implements UpdateTabel {
     private DataTable table;
 
     public AliasTable() {
+        EventHandler.registerForUpdateTableEvent(this);
         setLayout(new BorderLayout());
         table = new DataTable(HEADER);
-        table.updateTable(new Object[][]{{464, "userIn", "domainIn", "userOut", "doamainOut", false}});
-
-
         table.updateTable(new Object[][]{{422224, "usadsdsadrIn", "doasdsadmainIn", "usasdsaderOut", "asdasd", false}});
 
         add(new JScrollPane(table));
@@ -25,7 +24,6 @@ public class AliasTable extends JPanel implements UpdateTabel {
 
     @Override
     public void updateDomainTable(Object[][] data) {
-        table.updateTable(data);
     }
 
     @Override

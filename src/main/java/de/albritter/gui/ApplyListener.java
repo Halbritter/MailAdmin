@@ -7,10 +7,9 @@ import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
-
-import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  * Created by hhalbritter on 15.06.2016.
@@ -83,6 +82,7 @@ public class ApplyListener implements ActionListener {
                     ((Aliases) dataObject).setSourceDomain((String) src.getPanelAliases().getComboBoxDomain().getSelectedItem());
                     ((Aliases) dataObject).setSourceUsername(src.getPanelAliases().getTextSourceUsername().getText());
                     dataObject.setActive(src.getPanelAliases().getChckbxActive().isSelected() ? 1 : 0);
+                    dataObject.setId((Integer) src.getPanelAliases().getSpinnerID().getValue());
                     break;
                 } catch (IndexOutOfBoundsException ex) {
                     if (src.getRdbtnAdd().isSelected() || src.getRdbtnUpadte().isSelected()) {
@@ -92,6 +92,7 @@ public class ApplyListener implements ActionListener {
                     dataObject.setId((Integer) src.getPanelAliases().getSpinnerID().getValue());
                 }
             case 3: //TLS
+                System.out.println("TLS!");
                 try {
                     dataObject = new TLSPolicy();
 
@@ -119,6 +120,6 @@ public class ApplyListener implements ActionListener {
                 MySQLHandler.remove(dataObject);
             }
         }
-
+        src.updateTables();
     }
 }
