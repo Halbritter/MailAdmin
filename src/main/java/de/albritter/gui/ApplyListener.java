@@ -1,18 +1,18 @@
 /*
- * This file is part of VMail.
+ * This file is part of MailAdmin.
  *
- *     VMail is free software: you can redistribute it and/or modify
+ *     MailAdmin is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 2 of the License, or
  *     (at your option) any later version.
  *
- *     VMail is distributed in the hope that it will be useful,
+ *     MailAdmin is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
  *
  *     You should have received a copy of the GNU General Public License
- *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ *     along with MailAdmin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.albritter.gui;
@@ -24,10 +24,9 @@ import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
-
-import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  * Created by hhalbritter on 15.06.2016.
@@ -67,7 +66,7 @@ public class ApplyListener implements ActionListener {
                 }
             case 1://Mailbox
                 try {
-                    if (!(src.getPanelMailbox().getPasswordField().getText().equals(src.getPanelMailbox().getPasswordField_1().getText()))) {
+                    if (!(src.getPanelMailbox().getPasswordField().getText().equals(src.getPanelMailbox().getPasswordField_1().getText())) && !src.getRdbtnRemove().isSelected()) {
                         JOptionPane.showMessageDialog(src, "Password Mismatch");
                         return;
                     }

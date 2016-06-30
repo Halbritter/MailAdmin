@@ -1,18 +1,19 @@
+
 /*
- * This file is part of VMail.
+ * This file is part of MailAdmin.
  *
- *     VMail is free software: you can redistribute it and/or modify
+ *     MailAdmin is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 2 of the License, or
  *     (at your option) any later version.
  *
- *     VMail is distributed in the hope that it will be useful,
+ *     MailAdmin is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
  *
  *     You should have received a copy of the GNU General Public License
- *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+ *     along with MailAdmin.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package de.albritter.gui;
@@ -23,9 +24,11 @@ import de.albritter.gui.tables.MailboxTable;
 import de.albritter.gui.tables.TLSTable;
 import de.albritter.sql.MySQLHandler;
 import de.albritter.utils.EventHandler;
-import lombok.Getter;
-import lombok.Setter;
-
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -33,11 +36,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import lombok.Getter;
+import lombok.Setter;
 
 public class WindowMain extends JFrame {
     private final ButtonGroup buttonGroup = new ButtonGroup();
