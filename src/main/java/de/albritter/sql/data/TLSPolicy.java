@@ -25,7 +25,7 @@ import lombok.Setter;
  */
 public class TLSPolicy extends ADataObject {
 
-    public static String[] polices = new String[]{"NONE", "MAY", "ENCRYPT", "DANE", "DANE_ONLY", "VERIFY", "SECURE"};
+    public static String[] polices = new String[]{"NONE", "MAY", "ENCRYPT", "DANE", "DANE-ONLY", "VERIFY", "SECURE"};
     @Setter
     protected int active;
     @Setter

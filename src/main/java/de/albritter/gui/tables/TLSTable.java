@@ -28,14 +28,14 @@ import javax.swing.JScrollPane;
  * Created by hhalbritter on 14.06.2016.
  */
 public class TLSTable extends JPanel implements UpdateTabel {
-    public static final String[] HEADER = new String[]{"ID", "Domain", "Parameter"};
+    public static final String[] HEADER = new String[]{"ID", "Domain", "", "Parameter"};
     private DataTable table;
 
     public TLSTable() {
         EventHandler.registerForUpdateTableEvent(this);
         setLayout(new BorderLayout());
         table = new DataTable(HEADER);
-        table.updateTable(new Object[][]{{5, "Domain.tld", "params"}});
+        table.updateTable(new Object[][]{{5, "Domain.tld", "Policy", "params"}});
         add(new JScrollPane(table));
     }
 

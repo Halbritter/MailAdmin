@@ -128,8 +128,8 @@ public final class MySQLHandler {
                     break;
             }
             // preparedStatement = fill(preparedStatement, sData);
-            preparedStatement.setInt(idPos, data.getId());
             fill(preparedStatement, data.getDataAsArray());
+            preparedStatement.setInt(idPos, data.getId());
             preparedStatement.execute();
 
         } catch (SQLException e) {
