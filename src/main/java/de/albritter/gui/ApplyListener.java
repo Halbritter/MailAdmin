@@ -24,9 +24,10 @@ import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
+
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
 
 /**
  * Created by hhalbritter on 15.06.2016.
@@ -71,11 +72,8 @@ public class ApplyListener implements ActionListener {
                         return;
                     }
                     dataObject = new Mailbox();
-                    domain = src.getPanelMailbox().getTextMail().getText();
-                    user = domain.substring(0, domain.indexOf('@'));
-                    domain = domain.substring(domain.indexOf('@') + 1);
-                    ((Mailbox) dataObject).setDomain(domain);
-                    ((Mailbox) dataObject).setUsername(user);
+                    ((Mailbox) dataObject).setDomain((String) src.getPanelMailbox().getComboBoxDomain().getSelectedItem());
+                    ((Mailbox) dataObject).setUsername(src.getPanelMailbox().getTextMail().getText());
                     ((Mailbox) dataObject).setPassword(Sha512Crypt.Sha512_crypt(src.getPanelMailbox().getPasswordField().getText(), null, 5000));
                     dataObject.setActive((src.getPanelMailbox().getChckbxActive().isSelected()) ? 1 : 0);
                     ((Mailbox) dataObject).setQuota((Integer) src.getPanelMailbox().getSpinnerQuota().getValue());
