@@ -204,6 +204,7 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
         spinnerQuota.setEnabled(true);
         chckbxActive.setEnabled(true);
         chckbxSendonly.setEnabled(true);
+        comboBoxDomain.setEnabled(true);
     }
 
     @Override
@@ -215,7 +216,7 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
         spinnerQuota.setEnabled(true);
         chckbxActive.setEnabled(true);
         chckbxSendonly.setEnabled(true);
-
+        comboBoxDomain.setEnabled(true);
     }
 
     @Override
@@ -227,7 +228,7 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
         spinnerQuota.setEnabled(false);
         chckbxActive.setEnabled(false);
         chckbxSendonly.setEnabled(false);
-
+        comboBoxDomain.setEnabled(false);
     }
 
     public void updateCombobox(String[] domains) {
