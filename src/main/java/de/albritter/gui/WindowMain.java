@@ -24,11 +24,9 @@ import de.albritter.gui.tables.MailboxTable;
 import de.albritter.gui.tables.TLSTable;
 import de.albritter.sql.MySQLHandler;
 import de.albritter.utils.EventHandler;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -36,8 +34,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
-import lombok.Getter;
-import lombok.Setter;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 public class WindowMain extends JFrame {
     private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -185,6 +186,7 @@ public class WindowMain extends JFrame {
         EventHandler.updateAliasTable(MySQLHandler.getAliases());
         EventHandler.updateTLSTable(MySQLHandler.getTlsPolicies());
         panelAliases.updateCombobox(MySQLHandler.getCurrentDomainSet());
+        panelMailbox.updateCombobox(MySQLHandler.getCurrentDomainSet());
     }
 
 }
