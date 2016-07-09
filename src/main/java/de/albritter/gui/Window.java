@@ -18,6 +18,13 @@
 package de.albritter.gui;
 
 import de.albritter.sql.MySQLHandler;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -25,13 +32,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 public class Window extends JFrame {
     private JTextField txtServer;
@@ -136,14 +136,14 @@ public class Window extends JFrame {
         gbc_horizontalStrut.gridy = 1;
         getContentPane().add(horizontalStrut, gbc_horizontalStrut);
 
-        JCheckBox chckbxNewCheckBox = new JCheckBox("Save credentials");
-        GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
-        gbc_chckbxNewCheckBox.gridwidth = 3;
-        gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
-        gbc_chckbxNewCheckBox.anchor = GridBagConstraints.WEST;
-        gbc_chckbxNewCheckBox.gridx = 2;
-        gbc_chckbxNewCheckBox.gridy = 5;
-        getContentPane().add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
+//        JCheckBox chckbxNewCheckBox = new JCheckBox("Save credentials");
+//        GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
+//        gbc_chckbxNewCheckBox.gridwidth = 3;
+//        gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
+//        gbc_chckbxNewCheckBox.anchor = GridBagConstraints.WEST;
+//        gbc_chckbxNewCheckBox.gridx = 2;
+//        gbc_chckbxNewCheckBox.gridy = 5;
+//        getContentPane().add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
 
         ActionListener loginActionListener = new LoginActionListener(this);
         JButton btnNewButton_1 = new JButton("Cancel");
