@@ -18,10 +18,9 @@
 
 package de.albritter.gui;
 
-import de.albritter.utils.EventHandler;
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
 
 /**
  * Created by hhalbritter on 07.06.2016.
@@ -44,7 +43,6 @@ public class LoginActionListener implements ActionListener {
                 WindowMain w = new WindowMain();
                 w.setVisible(true);
                 w.setSize(600, 400);
-                EventHandler.radioAdd();
                 src.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Could not authenticate");

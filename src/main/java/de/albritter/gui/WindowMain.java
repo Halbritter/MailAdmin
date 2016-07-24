@@ -28,11 +28,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.Box;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -41,7 +39,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 public class WindowMain extends JFrame {
-    private final ButtonGroup buttonGroup = new ButtonGroup();
     @Getter
     private final PanelMailbox panelMailbox;
     @Getter
@@ -53,11 +50,11 @@ public class WindowMain extends JFrame {
     @Getter
     private final JTabbedPane tabbedPane;
     @Getter
-    private JRadioButton rdbtnAdd;
+    private JButton btnAdd;
     @Getter
-    private JRadioButton rdbtnUpadte;
+    private JButton btnUpadte;
     @Getter
-    private JRadioButton rdbtnRemove;
+    private JButton btnRemove;
     private JPanel swapPanel;
     private JPanel InputField;
     @Getter
@@ -111,23 +108,17 @@ public class WindowMain extends JFrame {
         gbc_verticalBox.gridy = 0;
         InputField.add(verticalBox, gbc_verticalBox);
 
-        RadioActionListener radioActionListener = new RadioActionListener();
-        rdbtnAdd = new JRadioButton("Add");
-        rdbtnAdd.addActionListener(radioActionListener);
-        verticalBox.add(rdbtnAdd);
-        rdbtnAdd.setSelected(true);
-        buttonGroup.add(rdbtnAdd);
-        rdbtnUpadte = new JRadioButton("Update");
-        rdbtnUpadte.addActionListener(radioActionListener);
-        verticalBox.add(rdbtnUpadte);
-        buttonGroup.add(rdbtnUpadte);
-        rdbtnRemove = new JRadioButton("Remove");
-        rdbtnRemove.addActionListener(radioActionListener);
-        verticalBox.add(rdbtnRemove);
-        buttonGroup.add(rdbtnRemove);
-        JButton btnApply = new JButton("Apply");
-        btnApply.addActionListener(new ApplyListener(this));
-        verticalBox.add(btnApply);
+        ApplyListener applyListener = new ApplyListener(this);
+        btnAdd = new JButton("Add");
+        btnAdd.addActionListener(applyListener);
+        verticalBox.add(btnAdd);
+        btnAdd.setSelected(true);
+        btnUpadte = new JButton("Update");
+        btnUpadte.addActionListener(applyListener);
+        verticalBox.add(btnUpadte);
+        btnRemove = new JButton("Remove");
+        btnRemove.addActionListener(applyListener);
+        verticalBox.add(btnRemove);
 
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);

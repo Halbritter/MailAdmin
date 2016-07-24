@@ -18,11 +18,11 @@
 
 package de.albritter.gui;
 
+import de.albritter.gui.tables.DataTable;
 import de.albritter.utils.EventHandler;
-import de.albritter.utils.UseRadioSelection;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import de.albritter.utils.TableSelectionEvent;
+import lombok.Getter;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -30,9 +30,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import lombok.Getter;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
-public class PanelAliases extends JPanel implements UseRadioSelection {
+public class PanelAliases extends JPanel implements TableSelectionEvent {
     @Getter
     private final JTextField textSourceUsername;
     @Getter
@@ -48,7 +50,7 @@ public class PanelAliases extends JPanel implements UseRadioSelection {
      * Create the panel.
      */
     public PanelAliases() {
-        EventHandler.registerForRadioEvent(this);
+        EventHandler.registerForSelectionChangeEvent(this);
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 29, 0};
         gridBagLayout.rowHeights = new int[]{20, 0, 0, 0, 0};
@@ -98,7 +100,7 @@ public class PanelAliases extends JPanel implements UseRadioSelection {
         gbc_lblAT1.gridy = 1;
         add(lblAT1, gbc_lblAT1);
 
-        comboBoxDomain = new JComboBox(new String[]{"tset", "foi13.de"});
+        comboBoxDomain = new JComboBox<>(new String[]{"tset", "foi13.de"});
         GridBagConstraints gbc_comboBox = new GridBagConstraints();
         gbc_comboBox.insets = new Insets(0, 0, 5, 5);
         gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -134,36 +136,39 @@ public class PanelAliases extends JPanel implements UseRadioSelection {
 
     }
 
-
-    @Override
-    public void selectAdd() {
-        spinnerID.setEnabled(false);
-        textDestination.setEnabled(true);
-        comboBoxDomain.setEnabled(true);
-        textSourceUsername.setEnabled(true);
-        chckbxActive.setEnabled(true);
-
-    }
-
-    @Override
-    public void selectUpdate() {
-        spinnerID.setEnabled(true);
-        textDestination.setEnabled(true);
-        comboBoxDomain.setEnabled(true);
-        textSourceUsername.setEnabled(true);
-        chckbxActive.setEnabled(true);
-    }
-
-    @Override
-    public void selectRemove() {
-        spinnerID.setEnabled(true);
-        textDestination.setEnabled(false);
-        comboBoxDomain.setEnabled(false);
-        textSourceUsername.setEnabled(false);
-        chckbxActive.setEnabled(false);
-    }
-
     public void updateCombobox(String[] domains) {
         comboBoxDomain.setModel(new DefaultComboBoxModel<>(domains));
+    }
+
+    @Override
+    public void selectionChange(DataTable table) {
+        for (int i = 0; i < table.getColumnCount(); i++) {
+
+            int selectedRow = table.getSelectedRow();
+            switch ((String) table.getColumnModel().getColumn(i).getHeaderValue()) {
+                case "ID":
+                    spinnerID.setValue(table.getValueAt(selectedRow, i));
+                    break;
+                case "Incoming User":
+                    textSourceUsername.setText((String) table.getValueAt(selectedRow, i));
+                    break;
+
+                case "Incoming Domain":
+                    comboBoxDomain.setSelectedItem(table.getValueAt(selectedRow, i));
+                    break;
+
+                case "Destination User":
+                    textDestination.setText((String) table.getValueAt(selectedRow, i) + '@');
+                    break;
+                case "Destination Domain":
+                    textDestination.setText(textDestination.getText() + table.getValueAt(selectedRow, i));
+                    break;
+                case "Active":
+                    //  System.out.println(table.getValueAt(selectedRow, i));
+                    chckbxActive.setSelected((Boolean) table.getValueAt(selectedRow, i));
+                    break;
+
+            }
+        }
     }
 }

@@ -17,6 +17,7 @@
 
 package de.albritter.sql.data;
 
+import lombok.Getter;
 import lombok.Setter;
 
 /**
@@ -35,10 +36,16 @@ public class Mailbox extends ADataObject {
     private int quota;
     @Setter
     private int sendonly;
+    @Setter
+    @Getter
+    private boolean changePassword;
 
     public String[] getDataAsArray() {
         System.out.println("{SHA512-CRYPT}" + password);
         //return new String[]{username, domain, "{SHA512-CRYPT}" + Sha512Crypt.Sha512_crypt(password, "$6$"+CryptoUtils.getNewSalt()+"$", 5000), String.valueOf(quota), String.valueOf(enabled), String.valueOf(sendonly)};
-        return new String[]{username, domain, "{SHA512-CRYPT}" + password, String.valueOf(quota), String.valueOf(active), String.valueOf(sendonly)};
+        if (changePassword)
+            return new String[]{username, domain, "{SHA512-CRYPT}" + password, String.valueOf(quota), String.valueOf(active), String.valueOf(sendonly)};
+
+        return new String[]{username, domain, String.valueOf(quota), String.valueOf(active), String.valueOf(sendonly)};
     }
 }

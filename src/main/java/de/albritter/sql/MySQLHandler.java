@@ -18,15 +18,17 @@
 package de.albritter.sql;
 
 import de.albritter.sql.data.ADataObject;
+import de.albritter.sql.data.Mailbox;
+import static java.sql.ResultSet.CONCUR_READ_ONLY;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Created by albritter on 04.06.16.
@@ -48,6 +50,7 @@ public final class MySQLHandler {
     private static final String GET_MAILBOX;
     private static final String GET_ALIAS;
     private static final String GET_TLS;
+    private static final String UPDATE_MAILBOX_WITHOUT_PASSWORD;
     @Setter
     private static String password;
     @Setter
@@ -61,7 +64,6 @@ public final class MySQLHandler {
     @Getter
     private static String[] currentDomainSet;
 
-
     static {
         ADD_DOMAIN = "INSERT INTO domains (domain) VALUES (?)";
         ADD_MAILBOX = "INSERT INTO accounts (username, domain, password, quota, enabled, sendonly) VALUES (?,?,?,?,?,?)";
@@ -69,6 +71,7 @@ public final class MySQLHandler {
         ADD_TLS = "INSERT INTO tlspolicies (domain, policy, params) VALUES (?,?,?)";
         UPDATE_DOMAIN = "UPDATE domains SET domain=? WHERE id=?;";
         UPDATE_MAILBOX = "UPDATE accounts SET username=?, domain=?, password=?, quota=?, enabled=?, sendonly=? WHERE id=?;";
+        UPDATE_MAILBOX_WITHOUT_PASSWORD = "UPDATE accounts SET username=?, domain=?, quota=?, enabled=?, sendonly=? WHERE id=?;";
         UPDATE_ALIAS = "UPDATE aliases SET source_username=?, source_domain=?, destination_username=?, destination_domain=?, enabled=? WHERE id=?;";
         UPDATE_TLS = "UPDATE tlspolicies SET domain=?, policy=?, params=? WHERE id=?;";
         REMOVE_DOMAIN = "DELETE FROM domains where id=?;";
@@ -115,8 +118,13 @@ public final class MySQLHandler {
                     idPos = 2;
                     break;
                 case "Mailbox":
-                    preparedStatement = conn.prepareStatement(UPDATE_MAILBOX);
-                    idPos = 7;
+                    if (((Mailbox) data).isChangePassword()) {
+                        preparedStatement = conn.prepareStatement(UPDATE_MAILBOX);
+                        idPos = 7;
+                    } else {
+                        preparedStatement = conn.prepareStatement(UPDATE_MAILBOX_WITHOUT_PASSWORD);
+                        idPos = 6;
+                    }
                     break;
                 case "Aliases":
                     preparedStatement = conn.prepareStatement(UPDATE_ALIAS);

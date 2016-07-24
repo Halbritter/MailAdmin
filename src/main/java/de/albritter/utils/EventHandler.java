@@ -34,71 +34,77 @@
 
 package de.albritter.utils;
 
+import de.albritter.gui.tables.DataTable;
 import de.albritter.gui.tables.UpdateTabel;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by hhalbritter on 09.06.2016.
  */
 public final class EventHandler {
-    private static ArrayList<UseRadioSelection> useRadioSelection = new ArrayList<UseRadioSelection>();
+    //   private static ArrayList<UseRadioSelection> useRadioSelection = new ArrayList<UseRadioSelection>();
     private static ArrayList<UpdateTabel> updateTabel = new ArrayList<UpdateTabel>();
+    private static ArrayList<TableSelectionEvent> tableSelectionEvent = new ArrayList<TableSelectionEvent>();
 
-    public static <T extends UseRadioSelection> void registerForRadioEvent(T obj) {
+   /* public static <T extends UseRadioSelection> void registerForRadioEvent(T obj) {
         useRadioSelection.add(obj);
-    }
+    }*/
 
     public static <T extends UpdateTabel> void registerForUpdateTableEvent(T obj) {
         updateTabel.add(obj);
     }
 
-    public static void radioAdd() {
-        Iterator<UseRadioSelection> ite = useRadioSelection.iterator();
-        while (ite.hasNext()) {
-            ite.next().selectAdd();
+    public static <T extends TableSelectionEvent> void registerForSelectionChangeEvent(T obj) {
+        tableSelectionEvent.add(obj);
+    }
+
+/*    public static void radioAdd() {
+        for (UseRadioSelection anUseRadioSelection : useRadioSelection) {
+            anUseRadioSelection.selectAdd();
         }
     }
 
     public static void radioUpdate() {
-        Iterator<UseRadioSelection> ite = useRadioSelection.iterator();
-        while (ite.hasNext()) {
-            ite.next().selectUpdate();
+        for (UseRadioSelection anUseRadioSelection : useRadioSelection) {
+            anUseRadioSelection.selectUpdate();
         }
     }
 
     public static void radioRemove() {
-        Iterator<UseRadioSelection> ite = useRadioSelection.iterator();
-        while (ite.hasNext()) {
-            ite.next().selectRemove();
+        for (UseRadioSelection anUseRadioSelection : useRadioSelection) {
+            anUseRadioSelection.selectRemove();
         }
-    }
+    }*/
 
     public static void updateMailboxTable(Object[][] data) {
-        Iterator<UpdateTabel> ite = updateTabel.iterator();
-        while (ite.hasNext()) {
-            ite.next().updateMailboxTable(data);
+        for (UpdateTabel anUpdateTabel : updateTabel) {
+            anUpdateTabel.updateMailboxTable(data);
         }
     }
 
     public static void updateAliasTable(Object[][] data) {
-        Iterator<UpdateTabel> ite = updateTabel.iterator();
-        while (ite.hasNext()) {
-            ite.next().updateAliasTable(data);
+        for (UpdateTabel anUpdateTabel : updateTabel) {
+            anUpdateTabel.updateAliasTable(data);
         }
     }
 
     public static void updateDomainTable(Object[][] data) {
-        Iterator<UpdateTabel> ite = updateTabel.iterator();
-        while (ite.hasNext()) {
-            ite.next().updateDomainTable(data);
+        for (UpdateTabel anUpdateTabel : updateTabel) {
+            anUpdateTabel.updateDomainTable(data);
         }
     }
 
     public static void updateTLSTable(Object[][] data) {
-        Iterator<UpdateTabel> ite = updateTabel.iterator();
-        while (ite.hasNext()) {
-            ite.next().updateTLSTable(data);
+        for (UpdateTabel anUpdateTabel : updateTabel) {
+            anUpdateTabel.updateTLSTable(data);
+        }
+    }
+
+    public static void selectionCahnge(DataTable table) {
+        System.out.println("Klick");
+        for (TableSelectionEvent aTableSelectionEvent : tableSelectionEvent) {
+            aTableSelectionEvent.selectionChange(table);
         }
     }
 }

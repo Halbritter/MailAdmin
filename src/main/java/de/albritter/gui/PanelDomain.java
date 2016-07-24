@@ -18,18 +18,20 @@
 
 package de.albritter.gui;
 
+import de.albritter.gui.tables.DataTable;
 import de.albritter.utils.EventHandler;
-import de.albritter.utils.UseRadioSelection;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import de.albritter.utils.TableSelectionEvent;
+import lombok.Getter;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import lombok.Getter;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
-public class PanelDomain extends JPanel implements UseRadioSelection {
+public class PanelDomain extends JPanel implements TableSelectionEvent {
     @Getter
     private JTextField textDomain;
     @Getter
@@ -39,7 +41,7 @@ public class PanelDomain extends JPanel implements UseRadioSelection {
      * Create the panel.
      */
     public PanelDomain() {
-        EventHandler.registerForRadioEvent(this);
+        EventHandler.registerForSelectionChangeEvent(this);
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0};
         gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -82,21 +84,18 @@ public class PanelDomain extends JPanel implements UseRadioSelection {
 
     }
 
-    @Override
-    public void selectAdd() {
-        spinnerID.setEnabled(false);
-        textDomain.setEnabled(true);
-    }
 
     @Override
-    public void selectUpdate() {
-        spinnerID.setEnabled(true);
-        textDomain.setEnabled(true);
-    }
-
-    @Override
-    public void selectRemove() {
-        spinnerID.setEnabled(true);
-        textDomain.setEnabled(false);
+    public void selectionChange(DataTable table) {
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            int selectedRow = table.getSelectedRow();
+            switch ((String) table.getColumnModel().getColumn(i).getHeaderValue()) {
+                case "ID":
+                    spinnerID.setValue(table.getValueAt(selectedRow, i));
+                    break;
+                case "Domain":
+                    textDomain.setText((String) table.getValueAt(selectedRow, i));
+            }
+        }
     }
 }

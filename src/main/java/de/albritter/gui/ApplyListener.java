@@ -24,6 +24,7 @@ import de.albritter.sql.data.Aliases;
 import de.albritter.sql.data.Domain;
 import de.albritter.sql.data.Mailbox;
 import de.albritter.sql.data.TLSPolicy;
+import de.albritter.utils.StringUtils;
 
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
@@ -42,104 +43,108 @@ public class ApplyListener implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     *
-     * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        String domain, user;
         ADataObject dataObject = null;
-        int dbug = 0;
-
         switch (src.getTabbedPane().getSelectedIndex()) {
-            case 0:
-                try {
-                    dataObject = new Domain();
-                    dataObject.setId((Integer) src.getPanelDomain().getSpinnerID().getValue());
-                    ((Domain) dataObject).setDomain(src.getPanelDomain().getTextDomain().getText());
-                    break;
-                } catch (IndexOutOfBoundsException ex) {
-                    if (src.getRdbtnAdd().isSelected() || src.getRdbtnUpadte().isSelected()) {
-                        JOptionPane.showMessageDialog(src, "Bitte \u00fcberpr\u00fcfen Sie Ihre eingabe");
-                        return;
-                    }
-                    dataObject.setId((Integer) src.getPanelDomain().getSpinnerID().getValue());
-                }
-            case 1://Mailbox
-                try {
-                    if (!(src.getPanelMailbox().getPasswordField().getText().equals(src.getPanelMailbox().getPasswordField_1().getText())) && !src.getRdbtnRemove().isSelected()) {
-                        JOptionPane.showMessageDialog(src, "Password Mismatch");
-                        return;
-                    }
-                    dataObject = new Mailbox();
-                    ((Mailbox) dataObject).setDomain((String) src.getPanelMailbox().getComboBoxDomain().getSelectedItem());
-                    ((Mailbox) dataObject).setUsername(src.getPanelMailbox().getTextMail().getText());
-                    ((Mailbox) dataObject).setPassword(Sha512Crypt.Sha512_crypt(src.getPanelMailbox().getPasswordField().getText(), null, 5000));
-                    dataObject.setActive((src.getPanelMailbox().getChckbxActive().isSelected()) ? 1 : 0);
-                    ((Mailbox) dataObject).setQuota((Integer) src.getPanelMailbox().getSpinnerQuota().getValue());
-                    dataObject.setId((Integer) src.getPanelMailbox().getSpinnerID().getValue());
-                    ((Mailbox) dataObject).setSendonly((src.getPanelMailbox().getChckbxSendonly().isSelected()) ? 1 : 0);
-                } catch (IndexOutOfBoundsException ex) {
-                    if (src.getRdbtnAdd().isSelected() || src.getRdbtnUpadte().isSelected()) {
-                        JOptionPane.showMessageDialog(src, "Bitte \u00fcberpr\u00fcfen Sie Ihre eingabe");
-                        return;
-                    }
-                    dataObject.setId((Integer) src.getPanelMailbox().getSpinnerID().getValue());
+            case 0: //domain
+                dataObject = new Domain();
+                dataObject.setId((int) src.getPanelDomain().getSpinnerID().getValue());
+                String domain = src.getPanelDomain().getTextDomain().getText();
+                if (!domain.equals(""))
+                    ((Domain) dataObject).setDomain(domain);
+                else {
 
+                    if (!e.getActionCommand().equals("Remove")) {
+                        JOptionPane.showMessageDialog(src, "Ihre Eingabe in dem Feld Domain ist ung\u00fcltig", "Fehler", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 }
-
                 break;
-            case 2://Alias
-                try {
-                    dataObject = new Aliases();
-                    domain = src.getPanelAliases().getTextDestination().getText();
-                    user = domain.substring(0, domain.indexOf('@'));
-                    domain = domain.substring(domain.indexOf('@') + 1);
-                    dataObject.setId((Integer) src.getPanelAliases().getSpinnerID().getValue());
-                    ((Aliases) dataObject).setDestinationUsername(user);
-                    ((Aliases) dataObject).setDestinationDomain(domain);
-                    ((Aliases) dataObject).setSourceDomain((String) src.getPanelAliases().getComboBoxDomain().getSelectedItem());
-                    ((Aliases) dataObject).setSourceUsername(src.getPanelAliases().getTextSourceUsername().getText());
-                    dataObject.setActive(src.getPanelAliases().getChckbxActive().isSelected() ? 1 : 0);
-                    dataObject.setId((Integer) src.getPanelAliases().getSpinnerID().getValue());
-                    break;
-                } catch (IndexOutOfBoundsException ex) {
-                    if (src.getRdbtnAdd().isSelected() || src.getRdbtnUpadte().isSelected()) {
-                        JOptionPane.showMessageDialog(src, "Bitte \u00fcberpr\u00fcfen Sie Ihre eingabe");
+            case 1: //mailbox
+                if (e.getActionCommand().equals("Add"))
+                    src.getPanelMailbox().getChckbxUpdatePassword().setSelected(true);
+                dataObject = new Mailbox();
+                dataObject.setId((int) src.getPanelMailbox().getSpinnerID().getValue());
+                ((Mailbox) dataObject).setDomain((String) src.getPanelMailbox().getComboBoxDomain().getSelectedItem());
+                if (src.getPanelMailbox().getChckbxUpdatePassword().isSelected()) {
+                    if (src.getPanelMailbox().getPasswordField().getText().equals(src.getPanelMailbox().getPasswordField_1().getText())) {
+                        ((Mailbox) dataObject).setPassword(Sha512Crypt.Sha512_crypt(src.getPanelMailbox().getPasswordField().getText(), null, 5000));
+                    } else {
+                        JOptionPane.showMessageDialog(src, "Passw\u00f6rter stimmen nicht \u00fcberein", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    }
+                    ((Mailbox) dataObject).setChangePassword(true);
+
+                } else {
+                    ((Mailbox) dataObject).setChangePassword(false);
+                }
+                String user = src.getPanelMailbox().getTextMail().getText();
+                if (!user.equals("")) {
+                    ((Mailbox) dataObject).setUsername(user);
+                } else {
+                    if (!e.getActionCommand().equals("Remove")) {
+                        JOptionPane.showMessageDialog(src, "Ihre Eingabe in dem Feld \"Mail Address\" ist ung\u00fcltig", "Fehler", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    dataObject.setId((Integer) src.getPanelAliases().getSpinnerID().getValue());
                 }
+                ((Mailbox) dataObject).setActive(src.getPanelMailbox().getChckbxActive().isSelected() ? 1 : 0);
+                ((Mailbox) dataObject).setSendonly(src.getPanelMailbox().getChckbxSendonly().isSelected() ? 1 : 0);
+                if (!e.getActionCommand().equals("Remove"))
+                    try {
+
+                        src.getPanelMailbox().getSpinnerQuota().commitEdit();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                ((Mailbox) dataObject).setQuota((int) src.getPanelMailbox().getSpinnerQuota().getValue());
+                break;
+            case 2: //Aliases
+                dataObject = new Aliases();
+                dataObject.setId((int) src.getPanelAliases().getSpinnerID().getValue());
+                String sUser = src.getPanelAliases().getTextSourceUsername().getText();
+                if (!sUser.equals("")) {
+                    ((Aliases) dataObject).setSourceUsername(sUser);
+                } else {
+                    JOptionPane.showMessageDialog(src, "Ihre Eingabe in dem Feld \"Source\" ist ung\u00fcltig", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    if (!e.getActionCommand().equals("Remove"))
+                        return;
+                }
+                ((Aliases) dataObject).setSourceDomain((String) src.getPanelAliases().getComboBoxDomain().getSelectedItem());
+                String dUser = src.getPanelAliases().getTextDestination().getText();
+                if (StringUtils.verifyEmailAddressFormat(dUser)) {
+                    String dDomain = dUser.substring(dUser.indexOf('@') + 1, dUser.length());
+                    dUser = dUser.substring(0, dUser.indexOf('@'));
+                    ((Aliases) dataObject).setDestinationUsername(dUser);
+                    ((Aliases) dataObject).setDestinationDomain(dDomain);
+                } else {
+                    if (!e.getActionCommand().equals("Remove")) {
+                        JOptionPane.showMessageDialog(src, "Ihre Eingabe in dem Feld \"Destination\" ist ung\u00fcltig", "Fehler", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+                ((Aliases) dataObject).setActive(src.getPanelAliases().getChckbxActive().isSelected() ? 1 : 0);
                 break;
             case 3: //TLS
-                System.out.println("TLS!");
-                try {
-                    dataObject = new TLSPolicy();
-
-                    dataObject.setId((Integer) src.getPanelTLS().getSpinnerID().getValue());
-                    ((TLSPolicy) dataObject).setParms(src.getPanelTLS().getTextArgument().getText());
-                    ((TLSPolicy) dataObject).setPolicy((String) src.getPanelTLS().getComboBoxPolicy().getSelectedItem());
-                    ((TLSPolicy) dataObject).setDomain(src.getPanelTLS().getTextDomain().getText());
-                    break;
-                } catch (IndexOutOfBoundsException ex) {
-                    if (src.getRdbtnAdd().isSelected() || src.getRdbtnUpadte().isSelected()) {
-                        JOptionPane.showMessageDialog(src, "Bitte \u00fcberpr\u00fcfen Sie Ihre eingabe");
-                        return;
-                    }
-                    dataObject.setId((Integer) src.getPanelTLS().getSpinnerID().getValue());
-                }
+                dataObject = new TLSPolicy();
+                dataObject.setId((int) src.getPanelTLS().getSpinnerID().getValue());
+                ((TLSPolicy) dataObject).setDomain(src.getPanelTLS().getTextDomain().getText());
+                ((TLSPolicy) dataObject).setPolicy((String) src.getPanelTLS().getComboBoxPolicy().getSelectedItem());
+                ((TLSPolicy) dataObject).setParms(src.getPanelTLS().getTextArgument().getText());
+                break;
         }
-        if (src.getRdbtnAdd().isSelected()) {
-            MySQLHandler.add(dataObject);
-        } else if (src.getRdbtnUpadte().isSelected()) {
-            MySQLHandler.update(dataObject);
-        } else {
-            int result = JOptionPane.showConfirmDialog(null,
-                    "Are you sure to delete id " + dataObject.getId(), null, JOptionPane.YES_NO_OPTION);
-            if (result == JOptionPane.YES_OPTION) {
+        switch (e.getActionCommand()) {
+            case "Add":
+                MySQLHandler.add(dataObject);
+                break;
+            case "Update":
+                MySQLHandler.update(dataObject);
+                break;
+            case "Remove":
                 MySQLHandler.remove(dataObject);
-            }
+                break;
         }
+
         src.updateTables();
     }
 }

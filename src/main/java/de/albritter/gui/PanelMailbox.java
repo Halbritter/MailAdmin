@@ -19,8 +19,9 @@
 package de.albritter.gui;
 
 
+import de.albritter.gui.tables.DataTable;
 import de.albritter.utils.EventHandler;
-import de.albritter.utils.UseRadioSelection;
+import de.albritter.utils.TableSelectionEvent;
 import lombok.Getter;
 
 import javax.swing.Box;
@@ -36,7 +37,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-public class PanelMailbox extends JPanel implements UseRadioSelection {
+public class PanelMailbox extends JPanel implements TableSelectionEvent {
     @Getter
     private JTextField textMail;
     @Getter
@@ -50,6 +51,8 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
     @Getter
     private JCheckBox chckbxActive;
     @Getter
+    private JCheckBox chckbxUpdatePassword;
+    @Getter
     private Box horizontalBox;
     @Getter
     private JSpinner spinnerQuota;
@@ -60,12 +63,12 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
      * Create the panel.
      */
     public PanelMailbox() {
-        EventHandler.registerForRadioEvent(this);
+        EventHandler.registerForSelectionChangeEvent(this);
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
-        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
         gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0, 1.0, 1.0, Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         setLayout(gridBagLayout);
 
         JLabel lblId = new JLabel("ID");
@@ -158,7 +161,7 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
         gbc_passwordField_1.fill = GridBagConstraints.HORIZONTAL;
         add(passwordField_1, gbc_passwordField_1);
 
-        JLabel lblQuota = new JLabel("Quota");
+        JLabel lblQuota = new JLabel("Quota (mb)");
         GridBagConstraints gbc_lblQuota = new GridBagConstraints();
         gbc_lblQuota.anchor = GridBagConstraints.EAST;
         gbc_lblQuota.insets = new Insets(0, 0, 5, 5);
@@ -167,10 +170,11 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
         add(lblQuota, gbc_lblQuota);
 
         spinnerQuota = new JSpinner();
+        spinnerQuota.setEditor(new JSpinner.NumberEditor(spinnerQuota, "#"));
         GridBagConstraints gbc_spinnerQuota = new GridBagConstraints();
         gbc_spinnerQuota.ipadx = 20;
         gbc_spinnerQuota.anchor = GridBagConstraints.WEST;
-        gbc_spinnerQuota.insets = new Insets(0, 0, 5, 0);
+        gbc_spinnerQuota.insets = new Insets(0, 0, 5, 5);
         gbc_spinnerQuota.gridx = 1;
         gbc_spinnerQuota.gridy = 4;
         add(spinnerQuota, gbc_spinnerQuota);
@@ -180,59 +184,59 @@ public class PanelMailbox extends JPanel implements UseRadioSelection {
         chckbxSendonly.setActionCommand("Sendonly");
         GridBagConstraints gbc_chckbxSendonly = new GridBagConstraints();
         gbc_chckbxSendonly.anchor = GridBagConstraints.WEST;
-        gbc_chckbxSendonly.insets = new Insets(0, 0, 5, 0);
+        gbc_chckbxSendonly.insets = new Insets(0, 0, 5, 5);
         gbc_chckbxSendonly.gridx = 1;
         gbc_chckbxSendonly.gridy = 5;
         add(chckbxSendonly, gbc_chckbxSendonly);
+
+        chckbxUpdatePassword = new JCheckBox("Change Password");
+        chckbxUpdatePassword.setActionCommand("Change Password");
+        GridBagConstraints gbc_chckbxUpdatePassword = new GridBagConstraints();
+        gbc_chckbxUpdatePassword.anchor = GridBagConstraints.WEST;
+        gbc_chckbxUpdatePassword.insets = new Insets(0, 0, 5, 0);
+        gbc_chckbxUpdatePassword.gridx = 1;
+        gbc_chckbxUpdatePassword.gridy = 7;
+        add(chckbxUpdatePassword, gbc_chckbxUpdatePassword);
 
         chckbxActive = new JCheckBox("Active");
         chckbxActive.setActionCommand("Active");
         GridBagConstraints gbc_chckbxActive = new GridBagConstraints();
         gbc_chckbxActive.anchor = GridBagConstraints.WEST;
+        gbc_chckbxActive.insets = new Insets(0, 0, 5, 0);
         gbc_chckbxActive.gridx = 1;
         gbc_chckbxActive.gridy = 6;
         add(chckbxActive, gbc_chckbxActive);
 
     }
 
-    @Override
-    public void selectAdd() {
-        spinnerID.setEnabled(false);
-        textMail.setEnabled(true);
-        passwordField.setEnabled(true);
-        passwordField_1.setEnabled(true);
-        spinnerQuota.setEnabled(true);
-        chckbxActive.setEnabled(true);
-        chckbxSendonly.setEnabled(true);
-        comboBoxDomain.setEnabled(true);
-    }
-
-    @Override
-    public void selectUpdate() {
-        spinnerID.setEnabled(true);
-        textMail.setEnabled(true);
-        passwordField.setEnabled(true);
-        passwordField_1.setEnabled(true);
-        spinnerQuota.setEnabled(true);
-        chckbxActive.setEnabled(true);
-        chckbxSendonly.setEnabled(true);
-        comboBoxDomain.setEnabled(true);
-    }
-
-    @Override
-    public void selectRemove() {
-        spinnerID.setEnabled(true);
-        textMail.setEnabled(false);
-        passwordField.setEnabled(false);
-        passwordField_1.setEnabled(false);
-        spinnerQuota.setEnabled(false);
-        chckbxActive.setEnabled(false);
-        chckbxSendonly.setEnabled(false);
-        comboBoxDomain.setEnabled(false);
-    }
-
     public void updateCombobox(String[] domains) {
         comboBoxDomain.setModel(new DefaultComboBoxModel<>(domains));
     }
 
+    @Override
+    public void selectionChange(DataTable table) {
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            int selectedRow = table.getSelectedRow();
+            switch ((String) table.getColumnModel().getColumn(i).getHeaderValue()) {
+                case "ID":
+                    spinnerID.setValue(table.getValueAt(selectedRow, i));
+                    break;
+                case "Domain":
+                    comboBoxDomain.setSelectedItem(table.getValueAt(selectedRow, i));
+                    break;
+                case "Username":
+                    textMail.setText((String) table.getValueAt(selectedRow, i));
+                    break;
+                case "Active":
+                    chckbxActive.setSelected((Boolean) table.getValueAt(selectedRow, i));
+                    break;
+                case "Quota":
+                    spinnerQuota.setValue(table.getValueAt(selectedRow, i));
+                    break;
+                case "Sendonly":
+                    chckbxSendonly.setSelected((Boolean) table.getValueAt(selectedRow, i));
+                    break;
+            }
+        }
+    }
 }
