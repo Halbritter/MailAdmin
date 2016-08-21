@@ -97,7 +97,7 @@ public class ApplyListener implements ActionListener {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                ((Mailbox) dataObject).setQuota((int) src.getPanelMailbox().getSpinnerQuota().getValue());
+                ((Mailbox) dataObject).setQuota(Integer.valueOf(String.valueOf( src.getPanelMailbox().getSpinnerQuota().getValue())));
                 break;
             case 2: //Aliases
                 dataObject = new Aliases();
