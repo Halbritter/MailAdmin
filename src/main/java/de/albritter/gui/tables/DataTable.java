@@ -1,5 +1,3 @@
-
-
 /*
  * This file is part of MailAdmin.
  *
@@ -22,6 +20,8 @@ package de.albritter.gui.tables;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Created by albritter on 10.06.16.
@@ -68,7 +68,9 @@ public class DataTable extends JTable {
 
     public void updateTable(Object[][] data) {
         this.data = data;
-        setModel(new DefaultTableModel(data, header));
+        TableModel model = new DefaultTableModel(data, header);
+        setModel(model);
+        setRowSorter(new TableRowSorter<TableModel>(model));
         for (int i = 0; i < header.length; i++) {
             switch (getColumnName(i)) {
                 case "ID":
