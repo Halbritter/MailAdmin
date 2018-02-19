@@ -18,13 +18,10 @@
 package de.albritter.gui;
 
 import de.albritter.sql.MySQLHandler;
+import de.albritter.utils.Options;
+import de.albritter.utils.Profile;
 
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -32,12 +29,17 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Window extends JFrame {
-    private JTextField txtServer;
+    private JComboBox<String> comboServer;
     private JTextField txtDatabase;
     private JTextField txtUsername;
     private JPasswordField txtPassword;
+    private HashMap<Integer, Profile> proflist;
 
     public Window() {
         super("Login");
@@ -65,15 +67,16 @@ public class Window extends JFrame {
         gbc_lblServer.gridy = 1;
         getContentPane().add(lblServer, gbc_lblServer);
 
-        txtServer = new JTextField();
+        comboServer = new JComboBox<>();
         GridBagConstraints gbc_textField = new GridBagConstraints();
         gbc_textField.gridwidth = 3;
         gbc_textField.insets = new Insets(0, 0, 5, 5);
         gbc_textField.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField.gridx = 2;
         gbc_textField.gridy = 1;
-        getContentPane().add(txtServer, gbc_textField);
-        txtServer.setColumns(10);
+        comboServer.setEditable(true);
+        getContentPane().add(comboServer, gbc_textField);
+
 
         JLabel lblNewLabel_1 = new JLabel("Database");
         GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
@@ -165,6 +168,35 @@ public class Window extends JFrame {
         btnNewButton.addActionListener(loginActionListener);
         btnNewButton.setActionCommand("Login");
         getContentPane().add(btnNewButton, gbc_btnNewButton);
+
+        JButton btnRemoveButton = new JButton("Remove");
+        GridBagConstraints gbc_btnRemoveButton = new GridBagConstraints();
+        gbc_btnRemoveButton.anchor = GridBagConstraints.EAST;
+        gbc_btnRemoveButton.insets = new Insets(0, 0, 0, 5);
+        gbc_btnRemoveButton.gridx = 2;
+        gbc_btnRemoveButton.gridy = 6;
+        btnRemoveButton.addActionListener(loginActionListener);
+        btnRemoveButton.setActionCommand("Remove");
+        getContentPane().add(btnRemoveButton, gbc_btnRemoveButton);
+
+
+        proflist = Options.getInstance().loadProfiles();
+        Set<Integer> keys = proflist.keySet();
+        final HashMap<String, Profile> profbyname = new HashMap<>();
+        for (int i : keys) {
+            comboServer.addItem(proflist.get(i).getServer());
+            profbyname.put(proflist.get(i).getServer(), proflist.get(i));
+        }
+        comboServer.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent arg0) {
+                if (comboServer.getItemAt(comboServer.getSelectedIndex()) != null) {
+                    txtDatabase.setText(profbyname.get(comboServer.getItemAt(comboServer.getSelectedIndex())).getDbname());
+                    txtUsername.setText(profbyname.get(comboServer.getItemAt(comboServer.getSelectedIndex())).getUsername());
+                }
+            }
+        });
+        comboServer.getItemListeners()[0].itemStateChanged(null);
+
     }
 
     /**
@@ -184,11 +216,44 @@ public class Window extends JFrame {
     }
 
     public boolean openMySQLConection() {
-        MySQLHandler.setServer(this.txtServer.getText());
+        if (comboServer.getItemAt(comboServer.getSelectedIndex()) == null) {
+            MySQLHandler.setServer((String) comboServer.getEditor().getItem());
+        } else {
+            MySQLHandler.setServer(comboServer.getItemAt(comboServer.getSelectedIndex()));
+        }
         MySQLHandler.setUser(this.txtUsername.getText());
         MySQLHandler.setDb(this.txtDatabase.getText());
         MySQLHandler.setPassword(this.txtPassword.getText());
 
         return MySQLHandler.openConnection();
+    }
+
+    public void saveNewProfile() {
+        System.out.println("");
+        Options o = Options.getInstance();
+        Profile p = new Profile();
+        p.setDbname(txtDatabase.getText());
+        if (comboServer.getItemAt(comboServer.getSelectedIndex()) == null) {
+            p.setServer((String) comboServer.getEditor().getItem());
+            System.out.println("editor");
+        } else {
+            p.setServer(comboServer.getItemAt(comboServer.getSelectedIndex()));
+            System.out.println("index");
+        }
+        System.out.println(p.getServer() + " :p");
+        p.setUsername(txtUsername.getText());
+        o.saveProfile(p);
+    }
+
+    public void removeProfileCurrent() {
+        Profile p = new Profile();
+        if (comboServer.getItemAt(comboServer.getSelectedIndex()) == null) {
+            p.setServer((String) comboServer.getEditor().getItem());
+            System.out.println("editor");
+        } else {
+            p.setServer(comboServer.getItemAt(comboServer.getSelectedIndex()));
+            System.out.println("index");
+        }
+        Options.getInstance().removeProfile(p);
     }
 }

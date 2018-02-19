@@ -43,10 +43,13 @@ public class LoginActionListener implements ActionListener {
                 WindowMain w = new WindowMain();
                 w.setVisible(true);
                 w.setSize(600, 400);
+                src.saveNewProfile();
                 src.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Could not authenticate");
             }
+        }else if(e.getActionCommand() == "Remove"){
+            src.removeProfileCurrent();
         }
 
     }

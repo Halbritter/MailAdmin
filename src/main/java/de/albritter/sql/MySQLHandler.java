@@ -94,6 +94,7 @@ public final class MySQLHandler {
 
     public static boolean openConnection() {
         try {
+            System.out.println(server);
             conn = DriverManager.getConnection("jdbc:mysql://" + server + "/" + db + "?requireSSL=true&serverTimezone=Europe/Berlin", user, password);
 
         } catch (SQLException e) {
