@@ -43,6 +43,7 @@ public class Window extends JFrame {
 
     public Window() {
         super("Login");
+        setDefaultCloseOperation(3);
         setSize(new Dimension(320, 210));
         setMinimumSize(new Dimension(300, 200));
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -255,5 +256,11 @@ public class Window extends JFrame {
             System.out.println("index");
         }
         Options.getInstance().removeProfile(p);
+        proflist = Options.getInstance().loadProfiles();
+        Set<Integer> keys = proflist.keySet();
+        comboServer.removeAllItems();
+        for (int i : keys) {
+            comboServer.addItem(proflist.get(i).getServer());
+        }
     }
 }
