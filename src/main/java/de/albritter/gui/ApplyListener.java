@@ -141,7 +141,11 @@ public class ApplyListener implements ActionListener {
                 MySQLHandler.update(dataObject);
                 break;
             case "Remove":
-                MySQLHandler.remove(dataObject);
+            	int input = JOptionPane.showConfirmDialog(null, "Would you really like to delete the entry ?", "Delete entry", JOptionPane.YES_NO_OPTION);
+    			if (input == 0)
+    			{
+    				MySQLHandler.remove(dataObject);
+    			}
                 break;
         }
 

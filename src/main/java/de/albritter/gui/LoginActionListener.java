@@ -19,6 +19,8 @@
 package de.albritter.gui;
 
 import javax.swing.JOptionPane;
+
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,7 +44,9 @@ public class LoginActionListener implements ActionListener {
             if (src.openMySQLConection()) {
                 WindowMain w = new WindowMain();
                 w.setVisible(true);
-                w.setSize(600, 400);
+                w.setSize(new Dimension(800, 550));
+				w.setMinimumSize(new Dimension(800, 550));
+				w.setLocationRelativeTo(null);
                 src.saveNewProfile();
                 src.dispose();
             } else {
